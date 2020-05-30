@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,7 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText mEmailField;
     private EditText mPasswordField;
     private Button mSignInButton;
-    private Button mSignUpButton;
+    private TextView mSignUpButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +41,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
-
+        //if(mAuth.getCurrentUser()!=null){
+          //  startActivity(new Intent(MainActivity.this,Main3Activity.class));
+        //}
         // Views
         mEmailField = (EditText)findViewById(R.id.email);
         mPasswordField = (EditText)findViewById(R.id.password);
         mSignInButton = (Button)findViewById(R.id.login);
-        mSignUpButton = (Button)findViewById(R.id.signup);
+        mSignUpButton = (TextView) findViewById(R.id.textView4);
 
         // Click listeners
         mSignInButton.setOnClickListener(this);
         mSignUpButton.setOnClickListener(this);
     }
+
+
+
     private void signIn() {
-        Log.d(TAG, "signIn");
         if (!validateForm()) {
             return;
         }
@@ -63,10 +69,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signIn:onComplete:" + task.isSuccessful());
 
                         if (task.isSuccessful()) {
-                            onAuthSuccess(task.getResult().getUser(),1);
+                            onAuthSuccess(task.getResult().getUser());
                         } else {
                             Toast.makeText(MainActivity.this, "Sign In Failed",
                                     Toast.LENGTH_SHORT).show();
@@ -75,41 +80,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
-    private void signUp() {
-        Log.d(TAG, "signUp");
-        if (!validateForm()) {
-            return;
-        }
 
-        String email = mEmailField.getText().toString();
-        String password = mPasswordField.getText().toString();
-
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUser:onComplete:" + task.isSuccessful());
-
-                        if (task.isSuccessful()) {
-                            onAuthSuccess(task.getResult().getUser(),0);
-                        } else {
-                            Toast.makeText(MainActivity.this, "Sign Up Failed",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-    private void onAuthSuccess(FirebaseUser user,int a) {
+    private void onAuthSuccess(FirebaseUser user) {
         String username = usernameFromEmail(user.getEmail());
 
-        // Write new user
-        if(a==0) {
-            writeNewUser(user.getUid(), username, user.getEmail());
-        }
-        // Go to MainActivity
-        startActivity(new Intent(MainActivity.this, Main2Activity.class));
-        finish();
+        writeNewUser(user.getUid(), username, user.getEmail());
+
+        startActivity(new Intent(MainActivity.this, Main3Activity.class));
     }
 
     private String usernameFromEmail(String email) {
@@ -139,30 +116,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return result;
     }
 
-    // [START basic_write]
+
     private void writeNewUser(String userId, String name, String email) {
         User user = new User(name, email);
         System.out.println(mDatabase);
-
-        mDatabase.child("users").child(userId).setValue(user).addOnCompleteListener(this, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Toast.makeText(MainActivity.this,"congo",Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+        mDatabase.child("users").child(userId).setValue(user);
     }
-    // [END basic_write]
+
 
     @Override
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.login) {
             signIn();
-        } else if (i == R.id.signup) {
-            startActivity(new Intent(MainActivity.this,Main3Activity.class));
-            finish();
+        } else if (i == R.id.textView4) {
+            startActivity(new Intent(MainActivity.this,Main2Activity.class));
         }
     }
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -49,9 +50,9 @@ public class Main2Activity extends AppCompatActivity {
         n=(EditText)findViewById(R.id.editText3);
         o=(EditText)findViewById(R.id.editText2);
         s=(Button)findViewById(R.id.button);
-        mAuth=FirebaseAuth.getInstance();
         v=(Button)findViewById(R.id.button2);
-        s.setOnClickListener(new View.OnClickListener() {
+        mAuth=FirebaseAuth.getInstance();
+      s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ph=p.getText().toString();
@@ -157,4 +158,7 @@ public class Main2Activity extends AppCompatActivity {
     }
 
 
+    public void back1(View view) {
+        startActivity(new Intent(Main2Activity.this,MainActivity.class));
+    }
 }
