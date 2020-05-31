@@ -159,6 +159,9 @@ public class Main2Activity extends AppCompatActivity {
 
 
     public void back1(View view) {
-        startActivity(new Intent(Main2Activity.this,MainActivity.class));
+        String str = n.getText().toString();
+        Intent  i = new Intent(Main2Activity.this,MainActivity.class);
+        i.putExtra("mkey",str);
+        startActivity(i);
     }
 }

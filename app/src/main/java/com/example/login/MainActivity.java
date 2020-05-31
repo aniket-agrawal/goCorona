@@ -41,9 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
-        //if(mAuth.getCurrentUser()!=null){
-          //  startActivity(new Intent(MainActivity.this,Main3Activity.class));
-        //}
         // Views
         mEmailField = (EditText)findViewById(R.id.email);
         mPasswordField = (EditText)findViewById(R.id.password);
@@ -53,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Click listeners
         mSignInButton.setOnClickListener(this);
         mSignUpButton.setOnClickListener(this);
+        Intent i = getIntent();
+        String str = i.getStringExtra("mkey");
+        mEmailField.setText(str);
     }
 
 
@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         writeNewUser(user.getUid(), username, user.getEmail());
 
         startActivity(new Intent(MainActivity.this, Main3Activity.class));
+        finish();
     }
 
     private String usernameFromEmail(String email) {
@@ -131,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             signIn();
         } else if (i == R.id.textView4) {
             startActivity(new Intent(MainActivity.this,Main2Activity.class));
+            finish();
         }
     }
 }
