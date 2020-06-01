@@ -11,4 +11,19 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+
+
+
+
+    <string-array name="typeoffeedback">
+
+
+        <item>Select Type Of Feedback</item>
+        <item>Reporting a nearby corona case</item>
+        <item>Need Govt. support</item>
+        <item>Queries Regarding Lockdown</item>
+        <item>Lack of Medical Facilities</item>
+        <item>Custom</item>
+
+    </string-array>
 </resources>
