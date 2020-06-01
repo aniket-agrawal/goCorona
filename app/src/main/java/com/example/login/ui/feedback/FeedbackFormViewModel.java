@@ -12,6 +12,7 @@ public class FeedbackFormViewModel extends ViewModel {
         mText = new MutableLiveData<>();
         mText.setValue("This is feedback fragment");
         //this is my fragment
+        //understand fragment
     }
 
     public LiveData<String> getText() {
