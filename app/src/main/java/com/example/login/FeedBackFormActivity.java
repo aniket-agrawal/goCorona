@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class FeedBackFormActivity extends AppCompatActivity {
@@ -38,6 +40,8 @@ public class FeedBackFormActivity extends AppCompatActivity {
     private DatabaseReference RootRef;
 
     private String feedBackTextString="";
+
+    private String currentDate, currentTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,14 +153,29 @@ public class FeedBackFormActivity extends AppCompatActivity {
         }
         else
             {
+
+                Calendar calForDate = Calendar.getInstance();
+                SimpleDateFormat curentDateFormat = new SimpleDateFormat("MMM dd,  yyyy") ;
+                currentDate=curentDateFormat.format(calForDate.getTime());
+
+                Calendar calForTime = Calendar.getInstance();
+                SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a") ;
+                currentTime=currentTimeFormat.format(calForTime.getTime());
+
+                String feedbackKey = RootRef.child("Users").child(currentUserId).child("feedback").push().getKey();
+
+
                 HashMap<String, Object> feedbackMap = new HashMap<>();
                 feedbackMap.put("uid", currentUserId);
+                feedbackMap.put("date", currentDate);
+                feedbackMap.put("time", currentTime);
                 feedbackMap.put("safety type", safetyType);
                 feedbackMap.put("feedback category", typeOfFeedBack);
                 feedbackMap.put("user feedback", feedBackTextString);
 
 
-                RootRef.child("Users").child(currentUserId).child("feedback").updateChildren(feedbackMap)
+
+                RootRef.child("Users").child(currentUserId).child("feedback").child(feedbackKey).updateChildren(feedbackMap)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task)
