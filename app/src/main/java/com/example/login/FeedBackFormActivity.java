@@ -49,6 +49,8 @@ public class FeedBackFormActivity extends AppCompatActivity {
         currentUserId=mAuth.getCurrentUser().getUid();
         RootRef= FirebaseDatabase.getInstance().getReference();
 
+        radioGroup = findViewById(R.id.radio_group);
+
 
 
         feedbackText = findViewById(R.id.feedback_text);
@@ -69,21 +71,25 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
                 if(position==1)
                 {
+                    customFeedback.setVisibility(View.INVISIBLE);
                         typeOfFeedBack = "Reporting a nearby corona case";
                 }
 
                 if(position==2)
                 {
+                    customFeedback.setVisibility(View.INVISIBLE);
                         typeOfFeedBack = "Need Govt. support";
                 }
 
                 if(position==3)
                 {
+                    customFeedback.setVisibility(View.INVISIBLE);
                     typeOfFeedBack = "Queries Regarding Lockdown";
                 }
 
                 if(position==4)
                 {
+                    customFeedback.setVisibility(View.INVISIBLE);
                     typeOfFeedBack = "Lack of Medical Facilities";
                 }
 
@@ -150,7 +156,7 @@ public class FeedBackFormActivity extends AppCompatActivity {
                 feedbackMap.put("user feedback", feedBackTextString);
 
 
-                RootRef.child("Users").child(currentUserId).updateChildren(feedbackMap)
+                RootRef.child("Users").child(currentUserId).child("feedback").updateChildren(feedbackMap)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task)
