@@ -29,7 +29,7 @@
             android:id="@+id/radio_yes"
             android:text="Yes"
             android:onClick="checkbox"
-            android:checked='true'/>
+            android:checked="true"/>
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -63,8 +63,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/feedback_text"
+        android:hint="Detailed description of your problem"
         android:layout_below="@+id/custom_feedback_type"
-
+        android:background="@color/cardview_dark_background"
+        android:layout_above="@+id/submit_feedback_button"
         android:layout_marginTop="20dp"
         />
 
