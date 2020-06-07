@@ -1,13 +1,17 @@
 package com.example.login;
 
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
@@ -21,11 +25,12 @@ import androidx.appcompat.widget.Toolbar;
 public class Mainpage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
-
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainpage);
+        mAuth=FirebaseAuth.getInstance();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -38,6 +43,9 @@ public class Mainpage extends AppCompatActivity implements NavigationView.OnNavi
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View h = navigationView.getHeaderView(0);
+        TextView t=h.findViewById(R.id.texti);
+        t.setText("aniket");
         navigationView.setNavigationItemSelectedListener(this);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -64,10 +72,15 @@ public class Mainpage extends AppCompatActivity implements NavigationView.OnNavi
                 || super.onSupportNavigateUp();
     }
 
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if(menuItem.getItemId()==R.id.nav_slideshow){
             startActivity(new Intent(Mainpage.this,FeedBackFormActivity.class));
+        }
+        else if(menuItem.getItemId()==R.id.nav_gallery){
+            mAuth.signOut();
+            startActivity(new Intent(Mainpage.this,Main2Activity.class));
         }
         return false;
     }

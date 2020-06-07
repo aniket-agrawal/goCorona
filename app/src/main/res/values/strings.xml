@@ -13,8 +13,6 @@
     <string name="menu_slideshow">Slideshow</string>
 
 
-
-
     <string-array name="typeoffeedback">
 
 
@@ -26,4 +24,11 @@
         <item>Custom</item>
 
     </string-array>
+    <string-array name="typeofgender">
+        <item>Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Others</item>
+    </string-array>
+
 </resources>
