@@ -48,7 +48,6 @@ public class FeedBackFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_back_form);
 
-
         mAuth=FirebaseAuth.getInstance();
         currentUserId=mAuth.getCurrentUser().getUid();
         RootRef= FirebaseDatabase.getInstance().getReference();
