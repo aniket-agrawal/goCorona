@@ -7,11 +7,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
@@ -22,15 +28,39 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class Mainpage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Mainpage extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private FirebaseAuth mAuth;
+    private NavigationView navigationView;
+    private NavController navController;
+    String phone,name;
+    DatabaseReference rootref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainpage);
         mAuth=FirebaseAuth.getInstance();
+        phone=mAuth.getCurrentUser().getPhoneNumber();
+        phone=phone.substring(3);
+        //Intent i = getIntent();
+        //name = i.getStringExtra("mkey");
+        rootref=FirebaseDatabase.getInstance().getReference();
+        rootref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                name = dataSnapshot.child("users").child(phone).child("Name").getValue().toString();
+                navigationView = findViewById(R.id.nav_view);
+                View h = navigationView.getHeaderView(0);
+                TextView t = h.findViewById(R.id.textView);
+                t.setText(name);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -42,20 +72,21 @@ public class Mainpage extends AppCompatActivity implements NavigationView.OnNavi
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         View h = navigationView.getHeaderView(0);
         TextView t=h.findViewById(R.id.texti);
-        t.setText("aniket");
-        navigationView.setNavigationItemSelectedListener(this);
+        t.setText(phone);
+        //t = h.findViewById(R.id.textView);
+        //t.setText(name);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_gallery, R.id.feedBackFormActivity2,R.id.main2Activity)
                 .setDrawerLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        //NavigationUI.setupWithNavController(navigationView, navController);
+        NavigationUI.setupWithNavController(navigationView, navController);
     }
 
     @Override
@@ -72,16 +103,4 @@ public class Mainpage extends AppCompatActivity implements NavigationView.OnNavi
                 || super.onSupportNavigateUp();
     }
 
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if(menuItem.getItemId()==R.id.nav_slideshow){
-            startActivity(new Intent(Mainpage.this,FeedBackFormActivity.class));
-        }
-        else if(menuItem.getItemId()==R.id.nav_gallery){
-            mAuth.signOut();
-            startActivity(new Intent(Mainpage.this,Main2Activity.class));
-        }
-        return false;
-    }
 }

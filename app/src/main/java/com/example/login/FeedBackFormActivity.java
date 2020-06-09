@@ -32,7 +32,7 @@ public class FeedBackFormActivity extends AppCompatActivity {
     private EditText customFeedback;
     private RadioGroup radioGroup;
     private RadioButton radioButton;
-    private String safetyType;
+    private String safetyType="Yes";
     private EditText feedbackText;
 
     private String currentUserId;
