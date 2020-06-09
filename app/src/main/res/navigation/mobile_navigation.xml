@@ -23,5 +23,15 @@
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_feedback" />
 
+    <activity
+        android:id="@+id/feedBackFormActivity2"
+        android:name="com.example.login.FeedBackFormActivity"
+        android:label="activity_feed_back_form"
+        tools:layout="@layout/activity_feed_back_form" />
 
+    <activity
+        android:id="@+id/main2Activity"
+        android:name="com.example.login.Main2Activity"
+        android:label="activity_main2"
+        tools:layout="@layout/activity_main2" />
 </navigation>

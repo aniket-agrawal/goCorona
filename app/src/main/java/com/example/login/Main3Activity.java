@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +23,8 @@ public class Main3Activity extends AppCompatActivity {
     String s;
     long t,t1;
     private final Handler handler = new Handler();
+    DatabaseReference rootref;
+    String phone,name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +39,23 @@ public class Main3Activity extends AppCompatActivity {
                     finish();
                 }
                 else{
-                    startActivity(new Intent(Main3Activity.this, Mainpage.class));
+                    /*phone=mAuth.getCurrentUser().getPhoneNumber();
+                    phone=phone.substring(3);
+                    rootref=FirebaseDatabase.getInstance().getReference();
+                    rootref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            name = dataSnapshot.child("users").child(phone).child("Name").getValue().toString();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });*/
+                    Intent i = new Intent(Main3Activity.this, Mainpage.class);
+                    //i.putExtra("mkey",name);
+                    startActivity(i);
                     finish();
                 }
             }
