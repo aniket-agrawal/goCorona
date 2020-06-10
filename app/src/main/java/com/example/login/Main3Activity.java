@@ -21,6 +21,7 @@ public class Main3Activity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     String s;
+
     long t,t1;
     private final Handler handler = new Handler();
     DatabaseReference rootref;
@@ -31,10 +32,13 @@ public class Main3Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main3);
         t=System.currentTimeMillis();
         mAuth=FirebaseAuth.getInstance();
+
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 if(mAuth.getCurrentUser()==null) {
+
                     startActivity(new Intent(Main3Activity.this, Main2Activity.class));
                     finish();
                 }
