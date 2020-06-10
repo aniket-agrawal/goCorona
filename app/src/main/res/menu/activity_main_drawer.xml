@@ -16,9 +16,6 @@
             android:id="@+id/feedBackFormActivity2"
             android:icon="@drawable/ic_menu_feedback"
             android:title="Feedback Form" />
-        <item
-            android:id="@+id/main2Activity"
-            android:icon="@drawable/ic_menu_feedback"
-            android:title="SignOut" />
+
     </group>
 </menu>

@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -81,7 +82,7 @@ public class Mainpage extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.feedBackFormActivity2,R.id.main2Activity)
+                R.id.nav_home, R.id.nav_gallery, R.id.feedBackFormActivity2)
                 .setDrawerLayout(drawer)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -103,4 +104,9 @@ public class Mainpage extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    public void signout(MenuItem item) {
+        mAuth.signOut();
+        startActivity(new Intent(Mainpage.this,Main2Activity.class));
+        finish();
+    }
 }

@@ -13,6 +13,11 @@
     <string name="menu_slideshow">Slideshow</string>
 
 
+    <string name="map"><u>Map of confirmed cases per million residents</u></string>
+
+    <string name="map1"><u>Timeline of the pandemic spread across India</u></string>
+
+
     <string-array name="typeoffeedback">
 
 
