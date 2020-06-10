@@ -17,14 +17,13 @@
 
 
         <Button
+            android:id="@+id/button_get_current_location"
+            style="@style/TextAppearance.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button_get_current_location"
-            android:text="Get Current Location"
-            style="@style/TextAppearance.AppCompat.Button"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            />
+            android:text="Get Current Location" />
 
         <ProgressBar
             android:layout_width="30dp"

@@ -20,19 +20,12 @@ import com.google.firebase.database.ValueEventListener;
 public class Main3Activity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    String s;
-
-    long t,t1;
     private final Handler handler = new Handler();
-    DatabaseReference rootref;
-    String phone,name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
-        t=System.currentTimeMillis();
         mAuth=FirebaseAuth.getInstance();
-
 
         handler.postDelayed(new Runnable() {
             @Override
