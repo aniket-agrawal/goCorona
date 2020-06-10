@@ -2,19 +2,35 @@ package com.example.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.ResultReceiver;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +50,7 @@ public class FeedBackFormActivity extends AppCompatActivity {
     private RadioButton radioButton;
     private String safetyType="Yes";
     private EditText feedbackText;
+    private String phoneNum;
 
     private String currentUserId;
     private FirebaseAuth mAuth;
@@ -41,22 +58,70 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
     private String feedBackTextString="";
 
+
     private String currentDate, currentTime;
+
+
+
+
+
+//    FusedLocationProviderClient client;
+
+
+    Button getCurrentLocationButton;
+    TextView textViewLatLong, textViewAddress;
+    ProgressBar progressBar;
+    private final static int REQUEST_CODE_LOCATION_PERMISSION = 1;
+    private ResultReceiver resultReceiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_back_form);
 
+
+        resultReceiver = new AddressResultReceiver(new Handler());
+        getCurrentLocationButton = findViewById(R.id.button_get_current_location);
+
+        textViewLatLong = findViewById(R.id.textLatLong);
+        textViewAddress = findViewById(R.id.textAddress);
+
+        progressBar = findViewById(R.id.progress_dialog);
+
+
+
+
         mAuth=FirebaseAuth.getInstance();
         currentUserId=mAuth.getCurrentUser().getUid();
         RootRef= FirebaseDatabase.getInstance().getReference();
 
+        phoneNum = mAuth.getCurrentUser().getPhoneNumber();
+
+        phoneNum = phoneNum.substring(3);
         radioGroup = findViewById(R.id.radio_group);
 
 
 
         feedbackText = findViewById(R.id.feedback_text);
+
+
+
+        getCurrentLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(
+                        getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(FeedBackFormActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            REQUEST_CODE_LOCATION_PERMISSION);
+                } else {
+                    getCurrentLocation();
+                }
+            }
+        });
+
+
 
         spinner = (Spinner) findViewById(R.id.spinner_type_of_feedback);
         customFeedback = findViewById(R.id.custom_feedback_type);
@@ -112,11 +177,121 @@ public class FeedBackFormActivity extends AppCompatActivity {
         });
 
 
-        if(typeOfFeedBack.equals(""))
-        {
-            typeOfFeedBack = customFeedback.getText().toString();
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getCurrentLocation();
+//                getMap();
+            } else {
+                Toast.makeText(this, "Permission Not Granted", Toast.LENGTH_SHORT).show();
+            }
         }
     }
+
+
+    private void getCurrentLocation() {
+        progressBar.setVisibility(View.VISIBLE);
+
+        LocationRequest locationRequest = new LocationRequest();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(3000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        LocationServices.getFusedLocationProviderClient(FeedBackFormActivity.this)
+                .requestLocationUpdates(locationRequest, new LocationCallback() {
+
+
+                    @Override
+                    public void onLocationResult(LocationResult locationResult) {
+                        super.onLocationResult(locationResult);
+                        LocationServices.getFusedLocationProviderClient(FeedBackFormActivity.this)
+                                .removeLocationUpdates(this);
+                        if (locationResult != null && locationResult.getLocations().size() > 0) {
+                            int latestlocationIndex = locationResult.getLocations().size() - 1;
+                            double latitude =
+                                    locationResult.getLocations().get(latestlocationIndex).getLatitude();
+
+                            double longitude =
+                                    locationResult.getLocations().get(latestlocationIndex).getLongitude();
+                            textViewLatLong.setText(
+                                    String.format(
+                                            "Latitude: %s\nLongitude: %s",
+                                            latitude,
+                                            longitude
+                                    )
+                            );
+
+                            Location location = new Location("providerNA");
+                            location.setLatitude(latitude);
+                            location.setLongitude(longitude);
+
+
+
+
+
+
+                            fetchAddressFromLatLong(location);
+
+
+                        }
+                        else
+                        {
+                            progressBar.setVisibility(View.GONE);
+                        }
+
+
+                    }
+                }, Looper.getMainLooper());
+
+    }
+
+    private void fetchAddressFromLatLong(Location location){
+        Intent intent = new Intent(this, FetchAddressIntentService.class);
+        intent.putExtra(Constants.RECEIVER, resultReceiver);
+        intent.putExtra(Constants.LOCATION_DATA_EXTRA, location);
+        startService(intent);
+    }
+
+    private class AddressResultReceiver extends ResultReceiver{
+
+
+        public AddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            super.onReceiveResult(resultCode, resultData);
+            if(resultCode == Constants.SUCCESS_RESULT)
+            {
+                textViewAddress.setText(resultData.getString(Constants.RESULT_DATA_KEY));
+            }
+            else{
+                Toast.makeText(FeedBackFormActivity.this, resultData.getString(Constants.RESULT_DATA_KEY), Toast.LENGTH_SHORT).show();
+            }
+
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+
 
     public void checkbox(View view)
     {
@@ -146,10 +321,7 @@ public class FeedBackFormActivity extends AppCompatActivity {
             Toast.makeText(this, "Please let us know if you are safe", Toast.LENGTH_SHORT).show();
         }
 
-        else if(TextUtils.isEmpty(typeOfFeedBack))
-        {
-            Toast.makeText(this, "Please mention a feedback type", Toast.LENGTH_SHORT).show();
-        }
+
         else
             {
 
@@ -161,20 +333,27 @@ public class FeedBackFormActivity extends AppCompatActivity {
                 SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a") ;
                 currentTime=currentTimeFormat.format(calForTime.getTime());
 
-                String feedbackKey = RootRef.child("Users").child(currentUserId).child("feedback").push().getKey();
+                String feedbackKey = RootRef.child(phoneNum).child("feedback").push().getKey();
 
+                if(typeOfFeedBack.equals(""))
+                {
+                    typeOfFeedBack = customFeedback.getText().toString();
+                }
 
                 HashMap<String, Object> feedbackMap = new HashMap<>();
                 feedbackMap.put("uid", currentUserId);
                 feedbackMap.put("date", currentDate);
                 feedbackMap.put("time", currentTime);
-                feedbackMap.put("safety type", safetyType);
+//                feedbackMap.put("safety type", safetyType);
                 feedbackMap.put("feedback category", typeOfFeedBack);
                 feedbackMap.put("user feedback", feedBackTextString);
 
 
 
-                RootRef.child("Users").child(currentUserId).child("feedback").child(feedbackKey).updateChildren(feedbackMap)
+
+
+
+                RootRef.child("users").child(phoneNum).child("feedback").child(feedbackKey).updateChildren(feedbackMap)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task)
@@ -191,6 +370,7 @@ public class FeedBackFormActivity extends AppCompatActivity {
                                     }
                             }
                         });
+                RootRef.child("users").child(phoneNum).child("Safety").setValue(safetyType);
 
 
             }

@@ -39,6 +39,8 @@ public class Registration extends AppCompatActivity {
     private DatabaseReference rootref;
     private FirebaseAuth mAuth;
 
+    private int b=1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,7 +143,9 @@ public class Registration extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         Toast.makeText(Registration.this,"Registered",Toast.LENGTH_LONG).show();
+                        b=0;
                         startActivity(new Intent(Registration.this,Mainpage.class));
+                        finish();
                     }
                     else{
                         Toast.makeText(Registration.this,"Error: Please Retry",Toast.LENGTH_LONG).show();
@@ -154,9 +158,9 @@ public class Registration extends AppCompatActivity {
     @Override
     public void onDestroy(){
         super.onDestroy();
-        System.out.println("oops");
+        if(b==1){
         mAuth.getCurrentUser().delete();
-        mAuth.signOut();
+        mAuth.signOut();}
     }
 
 }
