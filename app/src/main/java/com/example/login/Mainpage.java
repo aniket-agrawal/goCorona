@@ -44,8 +44,6 @@ public class Mainpage extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         phone=mAuth.getCurrentUser().getPhoneNumber();
         phone=phone.substring(3);
-        //Intent i = getIntent();
-        //name = i.getStringExtra("mkey");
         rootref=FirebaseDatabase.getInstance().getReference();
         rootref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -77,10 +75,7 @@ public class Mainpage extends AppCompatActivity {
         View h = navigationView.getHeaderView(0);
         TextView t=h.findViewById(R.id.texti);
         t.setText(phone);
-        //t = h.findViewById(R.id.textView);
-        //t.setText(name);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.feedBackFormActivity2)
                 .setDrawerLayout(drawer)

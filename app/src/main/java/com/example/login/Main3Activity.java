@@ -20,16 +20,11 @@ import com.google.firebase.database.ValueEventListener;
 public class Main3Activity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    String s;
-    long t,t1;
     private final Handler handler = new Handler();
-    DatabaseReference rootref;
-    String phone,name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
-        t=System.currentTimeMillis();
         mAuth=FirebaseAuth.getInstance();
         handler.postDelayed(new Runnable() {
             @Override
@@ -39,22 +34,7 @@ public class Main3Activity extends AppCompatActivity {
                     finish();
                 }
                 else{
-                    /*phone=mAuth.getCurrentUser().getPhoneNumber();
-                    phone=phone.substring(3);
-                    rootref=FirebaseDatabase.getInstance().getReference();
-                    rootref.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            name = dataSnapshot.child("users").child(phone).child("Name").getValue().toString();
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });*/
                     Intent i = new Intent(Main3Activity.this, Mainpage.class);
-                    //i.putExtra("mkey",name);
                     startActivity(i);
                     finish();
                 }
