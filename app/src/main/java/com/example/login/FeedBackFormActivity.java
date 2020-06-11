@@ -49,12 +49,16 @@ public class FeedBackFormActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private String safetyType="Yes";
-    private EditText feedbackText;
+    private EditText feedbackText, textViewAddress;
     private String phoneNum;
 
     private String currentUserId;
     private FirebaseAuth mAuth;
     private DatabaseReference RootRef;
+
+    private double firebaseLat, firebaseLng;
+    private String firebaseAddress;
+
 
     private String feedBackTextString="";
 
@@ -69,7 +73,7 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
 
     Button getCurrentLocationButton;
-    TextView textViewLatLong, textViewAddress;
+    TextView textViewLatLong;
     ProgressBar progressBar;
     private final static int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private ResultReceiver resultReceiver;
@@ -230,6 +234,9 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
                             double longitude =
                                     locationResult.getLocations().get(latestlocationIndex).getLongitude();
+
+                            firebaseLat = latitude;
+                            firebaseLng = longitude;
                             textViewLatLong.setText(
                                     String.format(
                                             "Latitude: %s\nLongitude: %s",
@@ -335,6 +342,8 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
                 String feedbackKey = RootRef.child(phoneNum).child("feedback").push().getKey();
 
+                firebaseAddress = textViewAddress.getText().toString();
+
                 if(typeOfFeedBack.equals(""))
                 {
                     typeOfFeedBack = customFeedback.getText().toString();
@@ -347,6 +356,11 @@ public class FeedBackFormActivity extends AppCompatActivity {
 //                feedbackMap.put("safety type", safetyType);
                 feedbackMap.put("feedback category", typeOfFeedBack);
                 feedbackMap.put("user feedback", feedBackTextString);
+
+                feedbackMap.put("latitude", firebaseLat);
+                feedbackMap.put("longitude", firebaseLng);
+                feedbackMap.put("user_address", firebaseAddress);
+
 
 
 
