@@ -68,7 +68,7 @@ public class Mainpage extends AppCompatActivity {
         t.setText(phone);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.feedBackFormActivity2,R.id.nav_slideshow)
+                R.id.nav_home, R.id.feedBackFormActivity2,R.id.nav_slideshow, R.id.SocialService)
                 .setDrawerLayout(drawer)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
