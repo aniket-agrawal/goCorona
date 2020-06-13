@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.example.login.ui.feedback.FeedbackFormFragment"
-        android:label="@string/menu_slideshow"
+        android:label="Poster"
         tools:layout="@layout/fragment_feedback" />
 
     <activity
@@ -34,4 +34,10 @@
         android:name="com.example.login.Main2Activity"
         android:label="activity_main2"
         tools:layout="@layout/activity_main2" />
+
+    <activity
+    android:id="@+id/SocialService"
+    android:name="com.example.login.SocialServiceInputActivity"
+    android:label="activity_feed_back_form"
+    tools:layout="@layout/activity_social_service_input" />
 </navigation>
