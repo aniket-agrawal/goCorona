@@ -112,26 +112,18 @@
 
         />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/social_text"
-            android:hint="Detailed description of your Service"
-           android:layout_below="@+id/editTextDate"
-            android:background="@drawable/edittext"
-            android:layout_above="@+id/submit_social_button"
-            android:layout_marginTop="20dp"
-            />
+    <EditText
+        android:id="@+id/social_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/submit_social_button"
+        android:layout_below="@+id/editTextDate"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/edittext"
+        android:hint="Detailed description of your Service" />
 
-<!--    </LinearLayout>-->
-
-
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/social__text"
-            android:orientation="vertical"
-            tools:ignore="NotSibling">
-        <Button
+    <Button
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:id="@+id/submit_social_button"

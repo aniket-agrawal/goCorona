@@ -107,7 +107,7 @@
         android:layout_height="300dp"
         android:layout_above="@+id/submit_feedback_button"
         android:layout_marginTop="11dp"
-        android:background="@color/cardview_light_background"
+        android:background="@drawable/edittext"
         android:gravity="top"
         android:hint=" Detailed description of your problem."
         android:textColor="#000000"
