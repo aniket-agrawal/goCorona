@@ -43,8 +43,6 @@ public class Mainpage extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         phone=mAuth.getCurrentUser().getPhoneNumber();
         phone=phone.substring(3);
-        //Intent i = getIntent();
-        //name = i.getStringExtra("mkey");
         rootref=FirebaseDatabase.getInstance().getReference();
         rootref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -63,25 +61,14 @@ public class Mainpage extends AppCompatActivity {
         });
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         View h = navigationView.getHeaderView(0);
         TextView t=h.findViewById(R.id.texti);
         t.setText(phone);
-        //t = h.findViewById(R.id.textView);
-        //t.setText(name);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.feedBackFormActivity2)
+                R.id.nav_home, R.id.feedBackFormActivity2,R.id.nav_slideshow, R.id.SocialService)
                 .setDrawerLayout(drawer)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -108,4 +95,5 @@ public class Mainpage extends AppCompatActivity {
         startActivity(new Intent(Mainpage.this,Main2Activity.class));
         finish();
     }
+
 }

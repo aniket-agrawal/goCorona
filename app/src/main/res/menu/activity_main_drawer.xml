@@ -6,21 +6,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/stats_icon"
+            android:icon="@drawable/ic_menu_camera"
             android:title="Statistics" />
         <item
-            android:id="@+id/help_localites"
-            android:icon="@drawable/help_local_icon"
-            android:title="Help Localites" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/get_help_icon"
-            
-            android:title="Available local help" />
-        <item
             android:id="@+id/feedBackFormActivity2"
-            android:icon="@drawable/form_icon"
-            android:title="Self Assessment Form" />
-
+            android:icon="@drawable/ic_menu_feedback"
+            android:title="Feedback Form" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_feedback"
+            android:title="Awareness" />
+        <item
+            android:id="@+id/SocialService"
+            android:icon="@drawable/ic_menu_feedback"
+            android:title="Social Service Form" />
     </group>
 </menu>
