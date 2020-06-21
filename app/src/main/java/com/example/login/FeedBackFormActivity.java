@@ -73,7 +73,6 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
 
     Button getCurrentLocationButton;
-    TextView textViewLatLong;
     ProgressBar progressBar;
     private final static int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private ResultReceiver resultReceiver;
@@ -88,7 +87,6 @@ public class FeedBackFormActivity extends AppCompatActivity {
         resultReceiver = new AddressResultReceiver(new Handler());
         getCurrentLocationButton = findViewById(R.id.button_get_current_location);
 
-        textViewLatLong = findViewById(R.id.textLatLong);
         textViewAddress = findViewById(R.id.textAddress);
 
         progressBar = findViewById(R.id.progress_dialog);
@@ -237,13 +235,6 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
                             firebaseLat = latitude;
                             firebaseLng = longitude;
-                            textViewLatLong.setText(
-                                    String.format(
-                                            "Latitude: %s\nLongitude: %s",
-                                            latitude,
-                                            longitude
-                                    )
-                            );
 
                             Location location = new Location("providerNA");
                             location.setLatitude(latitude);

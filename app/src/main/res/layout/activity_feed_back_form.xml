@@ -7,13 +7,23 @@
     android:layout_height="match_parent"
     tools:context=".FeedBackFormActivity">
 
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textAlignment="center"
+        android:background="@drawable/gradient"
+        android:text="Feedback Form"
+        android:layout_marginTop="10dp"
+        android:textSize="30dp" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/data_layout"
-        android:orientation="vertical"
-        android:layout_above="@+id/safety_type">
+        android:layout_width="match_parent"
+        android:layout_height="252dp"
+        android:layout_below="@+id/textView9"
+        android:layout_marginTop="-50dp"
+        android:orientation="vertical">
 
 
         <Button
@@ -22,105 +32,87 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="80dp"
             android:text="Get Current Location" />
 
         <ProgressBar
+            android:id="@+id/progress_dialog"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:visibility="gone"
-            android:id="@+id/progress_dialog"/>
+            android:layout_marginTop="10dp"
+            android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/textLatLong"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            />
 
         <EditText
             android:id="@+id/textAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
             android:gravity="center"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
-            android:textStyle="bold"/>
-
+            android:textStyle="bold" />
 
 
     </LinearLayout>
 
 
     <TextView
+        android:id="@+id/safety_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Are You Safe?"
-        android:textAlignment="center"
-        android:id="@+id/safety_type"
         android:layout_above="@+id/radio_group"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="11dp"
+        android:text="  Are You Safe?"/>
 
     <RadioGroup
+        android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/radio_group"
-        android:layout_above="@+id/spinner_type_of_feedback">
+        android:layout_above="@+id/spinner_type_of_feedback"
+        android:layout_marginBottom="5dp">
 
         <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/radio_yes"
-            android:text="Yes"
-            android:onClick="checkbox"
-            android:checked="true"/>
-
-        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
+            android:onClick="checkbox"
+            android:text="Yes" />
+
+        <RadioButton
             android:id="@+id/radio_no"
-            android:text="No"
-            android:onClick="checkbox"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="checkbox"
+            android:text="No" />
 
 
     </RadioGroup>
-
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/custom_feedback_type"
-        android:hint="Type of Feedback"
-        android:layout_below="@+id/spinner_type_of_feedback"
-        android:layout_marginTop="25dp"
-        android:textAlignment="center"
-        android:visibility="invisible"/>
 
 
     <Spinner
         android:id="@+id/spinner_type_of_feedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:layout_above="@+id/feedback_text"
+        android:layout_marginBottom="5dp"/>
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/feedback_text"
-        android:hint="Detailed description of your problem"
-        android:layout_below="@+id/custom_feedback_type"
-        android:background="@color/cardview_dark_background"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:layout_above="@+id/submit_feedback_button"
-        android:layout_marginTop="20dp"
-        />
+        android:layout_marginTop="11dp"
+        android:background="@color/cardview_light_background"
+        android:gravity="top"
+        android:hint=" Detailed description of your problem."
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        android:textSize="18dp" />
 
     <Button
         android:layout_width="match_parent"
