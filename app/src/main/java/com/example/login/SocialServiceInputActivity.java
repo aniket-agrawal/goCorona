@@ -42,9 +42,10 @@ import java.util.HashMap;
 
 public class SocialServiceInputActivity extends AppCompatActivity {
 
-    private Spinner spinner;
+    private Spinner spinner,timeSpinner;
     private String typeOfSocial="";
     private EditText customSocial;
+    private EditText serviceTime,serviceDate;
 //    private RadioGroup radioGroup;
 //    private RadioButton radioButton;
 //    private String safetyType="Yes";
@@ -62,7 +63,7 @@ public class SocialServiceInputActivity extends AppCompatActivity {
     private String socialTextString="";
 
 
-    private String currentDate, currentTime;
+    private String currentDate, currentTime,serviceDateString="", serviceTimeString="",serviceTimeStringType="";
 
 
 
@@ -81,7 +82,14 @@ public class SocialServiceInputActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feed_back_form);
+        setContentView(R.layout.activity_social_service_input);
+
+        serviceDate = findViewById(R.id.editTextDate);
+        serviceTime = findViewById(R.id.editTextTime);
+
+
+
+        getCurrentLocationButton = findViewById(R.id.button_get_current_location_social);
 
 
         resultReceiver = new AddressResultReceiver(new Handler());
@@ -128,12 +136,21 @@ public class SocialServiceInputActivity extends AppCompatActivity {
 
 
         spinner = (Spinner) findViewById(R.id.spinner_social_type);
+
+        timeSpinner = (Spinner) findViewById(R.id.spinner_am_pm);
         customSocial = findViewById(R.id.custom_social_type);
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.type0fService));
 
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(myAdapter);
+
+
+        ArrayAdapter<String> my1Adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.typeOfTime));
+
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        timeSpinner.setAdapter(my1Adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -177,6 +194,35 @@ public class SocialServiceInputActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Toast.makeText(SocialServiceInputActivity.this, "Please select the type", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+        timeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+
+
+                if(position==0)
+                {
+                    serviceTimeStringType = "A.M.";
+                }
+
+                if(position==1)
+                {
+                    serviceTimeStringType = "P.M.";
+                }
+
+
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(SocialServiceInputActivity.this, "Please select the correct time", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -323,11 +369,23 @@ public class SocialServiceInputActivity extends AppCompatActivity {
     {
         socialTextString = socialText.getText().toString();
 
+        serviceDateString = serviceDate.getText().toString();
+        serviceTimeString = serviceTime.getText().toString();
+
         String NumberOfPeopleFirebase = numberOfPeople.getText().toString();
 
         if(TextUtils.isEmpty(socialTextString))
         {
             Toast.makeText(this, "Please write a description", Toast.LENGTH_SHORT).show();
+        }
+        else if(TextUtils.isEmpty(serviceTimeString)){
+            Toast.makeText(this, "Select the time please!", Toast.LENGTH_SHORT).show();
+        }
+        else if(TextUtils.isEmpty(serviceDateString)){
+            Toast.makeText(this, "Select the date please!", Toast.LENGTH_SHORT).show();
+        }
+        else if(TextUtils.isEmpty(serviceTimeStringType)){
+            Toast.makeText(this, "Select time correctly!", Toast.LENGTH_SHORT).show();
         }
 
 //        else if(TextUtils.isEmpty(typeOfSocial))
@@ -351,6 +409,8 @@ public class SocialServiceInputActivity extends AppCompatActivity {
 
             firebaseAddress = textViewAddressSocial.getText().toString();
 
+
+
             if(typeOfSocial.equals(""))
             {
                 typeOfSocial = customSocial.getText().toString();
@@ -368,6 +428,8 @@ public class SocialServiceInputActivity extends AppCompatActivity {
             SocialMap.put("longitude", firebaseLng);
             SocialMap.put("user_address", firebaseAddress);
             SocialMap.put("Number of People valid", NumberOfPeopleFirebase);
+            SocialMap.put("Date of Service", serviceDateString);
+            SocialMap.put("Time of Service", serviceTimeString + " " + serviceTimeStringType);
 
 
 
