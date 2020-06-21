@@ -65,7 +65,7 @@ public class Mainpage extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
         View h = navigationView.getHeaderView(0);
         TextView t=h.findViewById(R.id.texti);
-        t.setText(phone);
+        t.setText("+91-"+phone);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.feedBackFormActivity2,R.id.nav_slideshow, R.id.SocialService)

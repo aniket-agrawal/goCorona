@@ -45,7 +45,6 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
     private Spinner spinner;
     private String typeOfFeedBack="";
-    private EditText customFeedback;
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private String safetyType="Yes";
@@ -73,7 +72,6 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
 
     Button getCurrentLocationButton;
-    TextView textViewLatLong;
     ProgressBar progressBar;
     private final static int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private ResultReceiver resultReceiver;
@@ -88,7 +86,6 @@ public class FeedBackFormActivity extends AppCompatActivity {
         resultReceiver = new AddressResultReceiver(new Handler());
         getCurrentLocationButton = findViewById(R.id.button_get_current_location);
 
-        textViewLatLong = findViewById(R.id.textLatLong);
         textViewAddress = findViewById(R.id.textAddress);
 
         progressBar = findViewById(R.id.progress_dialog);
@@ -128,7 +125,6 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
 
         spinner = (Spinner) findViewById(R.id.spinner_type_of_feedback);
-        customFeedback = findViewById(R.id.custom_feedback_type);
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.typeoffeedback));
 
@@ -143,31 +139,27 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
                 if(position==1)
                 {
-                    customFeedback.setVisibility(View.INVISIBLE);
                         typeOfFeedBack = "Reporting a nearby corona case";
                 }
 
                 if(position==2)
                 {
-                    customFeedback.setVisibility(View.INVISIBLE);
                         typeOfFeedBack = "Need Govt. support";
                 }
 
                 if(position==3)
                 {
-                    customFeedback.setVisibility(View.INVISIBLE);
                     typeOfFeedBack = "Queries Regarding Lockdown";
                 }
 
                 if(position==4)
                 {
-                    customFeedback.setVisibility(View.INVISIBLE);
                     typeOfFeedBack = "Lack of Medical Facilities";
                 }
 
                 if(position==5)
                 {
-                    customFeedback.setVisibility(View.VISIBLE);
+                    typeOfFeedBack = "Others";
                 }
 
 
@@ -237,13 +229,6 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
                             firebaseLat = latitude;
                             firebaseLng = longitude;
-                            textViewLatLong.setText(
-                                    String.format(
-                                            "Latitude: %s\nLongitude: %s",
-                                            latitude,
-                                            longitude
-                                    )
-                            );
 
                             Location location = new Location("providerNA");
                             location.setLatitude(latitude);
@@ -344,10 +329,6 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
                 firebaseAddress = textViewAddress.getText().toString();
 
-                if(typeOfFeedBack.equals(""))
-                {
-                    typeOfFeedBack = customFeedback.getText().toString();
-                }
 
                 HashMap<String, Object> feedbackMap = new HashMap<>();
                 feedbackMap.put("uid", currentUserId);
