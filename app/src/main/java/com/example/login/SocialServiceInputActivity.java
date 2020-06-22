@@ -73,7 +73,6 @@ public class SocialServiceInputActivity extends AppCompatActivity {
 
 
     Button getCurrentLocationButton;
-    TextView textViewLatLong;
     ProgressBar progressBar;
     private final static int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private ResultReceiver resultReceiver;
@@ -95,7 +94,6 @@ public class SocialServiceInputActivity extends AppCompatActivity {
         resultReceiver = new AddressResultReceiver(new Handler());
         getCurrentLocationButton = findViewById(R.id.button_get_current_location_social);
 
-        textViewLatLong = findViewById(R.id.textLatLong_social);
         textViewAddressSocial = findViewById(R.id.textAddress_social);
 
         progressBar = findViewById(R.id.progress_dialog_social);
@@ -283,13 +281,6 @@ public class SocialServiceInputActivity extends AppCompatActivity {
 
                             firebaseLat = latitude;
                             firebaseLng = longitude;
-                            textViewLatLong.setText(
-                                    String.format(
-                                            "Latitude: %s\nLongitude: %s",
-                                            latitude,
-                                            longitude
-                                    )
-                            );
 
                             Location location = new Location("providerNA");
                             location.setLatitude(latitude);
