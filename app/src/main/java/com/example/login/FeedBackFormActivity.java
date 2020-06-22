@@ -382,4 +382,9 @@ public class FeedBackFormActivity extends AppCompatActivity {
         startActivity(mainIntent);
         finish();
     }
+
+    public void tellAboutAddress(View view)
+    {
+        Toast.makeText(this, "In case the Address does not match the address of your current location please mention the required address manually", Toast.LENGTH_LONG).show();
+    }
 }
