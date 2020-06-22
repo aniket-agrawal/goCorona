@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 public class Main2Activity extends AppCompatActivity {
 
     EditText p,o;
-    TextView x,rotp;
+    TextView x,rotp,cn;
     Button s;
     String ph,a="+91",phone,code,str;
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
@@ -52,6 +52,8 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
         p=(EditText)findViewById(R.id.editText);
         o=(EditText)findViewById(R.id.editText2);
+        cn=(TextView)findViewById(R.id.textView5);
+        cn.setVisibility(View.INVISIBLE);
         bar=(ProgressBar)findViewById(R.id.progressBar2);
         x=(TextView)findViewById(R.id.textView6);
         rotp=(TextView)findViewById(R.id.textView7);
@@ -117,6 +119,7 @@ public class Main2Activity extends AppCompatActivity {
                 p.setVisibility(View.INVISIBLE);
                 x.setVisibility(View.VISIBLE);
                 x.setText(str);
+                cn.setVisibility(View.VISIBLE);
                 s.setText("Verify");
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -178,6 +181,7 @@ public class Main2Activity extends AppCompatActivity {
         o.setVisibility(View.INVISIBLE);
         s.setText("Get  Verification Code");
         x.setVisibility(View.INVISIBLE);
+        cn.setVisibility(View.INVISIBLE);
         rotp.setVisibility(View.INVISIBLE);
     }
 
