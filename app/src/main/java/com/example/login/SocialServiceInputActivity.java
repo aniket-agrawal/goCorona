@@ -6,8 +6,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -23,12 +26,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.location.LocationCallback;
@@ -41,16 +47,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class SocialServiceInputActivity extends AppCompatActivity {
+public class SocialServiceInputActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    private Spinner spinner,timeSpinner;
+    private Spinner spinner;
     private String typeOfSocial="";
     private EditText customSocial;
-    private EditText serviceTime,serviceDate;
+//    private EditText serviceTime,serviceDate;
 //    private RadioGroup radioGroup;
 //    private RadioButton radioButton;
 //    private String safetyType="Yes";
@@ -68,7 +75,13 @@ public class SocialServiceInputActivity extends AppCompatActivity {
     private String socialTextString="";
 
 
-    private String currentDate, currentTime,serviceDateString="", serviceTimeString="",serviceTimeStringType="";
+    private String currentDate, currentTime;
+
+    ImageButton dateButton,timeButton;
+
+    private String serviceDate="",serviceTime="";
+
+    private TextView textViewServiceDate,textViewServiceTime;
 
 
 
@@ -89,12 +102,19 @@ public class SocialServiceInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_social_service_input);
 
-        serviceDate = findViewById(R.id.editTextDate);
-        serviceTime = findViewById(R.id.editTextTime);
+//        serviceDate = findViewById(R.id.editTextDate);
+//        serviceTime = findViewById(R.id.editTextTime);
 
 
 
         getCurrentLocationButton = findViewById(R.id.button_get_current_location_social);
+
+        textViewServiceDate = findViewById(R.id.service_date_text_view);
+        textViewServiceTime = findViewById(R.id.service_time_text_view);
+
+
+        dateButton = findViewById(R.id.date_picker);
+        timeButton = findViewById(R.id.time_picker);
 
 
         resultReceiver = new AddressResultReceiver(new Handler());
@@ -144,7 +164,7 @@ public class SocialServiceInputActivity extends AppCompatActivity {
 
         spinner = (Spinner) findViewById(R.id.spinner_social_type);
 
-        timeSpinner = (Spinner) findViewById(R.id.spinner_am_pm);
+//        timeSpinner = (Spinner) findViewById(R.id.spinner_am_pm);
         customSocial = findViewById(R.id.custom_social_type);
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.type0fService));
@@ -153,11 +173,11 @@ public class SocialServiceInputActivity extends AppCompatActivity {
         spinner.setAdapter(myAdapter);
 
 
-        ArrayAdapter<String> my1Adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.typeOfTime));
-
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        timeSpinner.setAdapter(my1Adapter);
+//        ArrayAdapter<String> my1Adapter = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.typeOfTime));
+//
+//        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        timeSpinner.setAdapter(my1Adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -206,30 +226,49 @@ public class SocialServiceInputActivity extends AppCompatActivity {
 
 
 
-        timeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//        timeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+//            {
+//
+//
+//                if(position==0)
+//                {
+//                    serviceTimeStringType = "A.M.";
+//                }
+//
+//                if(position==1)
+//                {
+//                    serviceTimeStringType = "P.M.";
+//                }
+//
+//
+//
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//                Toast.makeText(SocialServiceInputActivity.this, "Please select the correct time", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+        dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
+            public void onClick(View v) {
 
-
-                if(position==0)
-                {
-                    serviceTimeStringType = "A.M.";
-                }
-
-                if(position==1)
-                {
-                    serviceTimeStringType = "P.M.";
-                }
-
-
-
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "date picker");
 
             }
+        });
 
+
+        timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(SocialServiceInputActivity.this, "Please select the correct time", Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
             }
         });
 
@@ -237,6 +276,30 @@ public class SocialServiceInputActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        String type="A.M.";
+        if(hourOfDay>12){
+            hourOfDay = hourOfDay - 12;
+            type = "P.M.";
+        }
+        serviceTime = hourOfDay + ":" + minute + " "+ type;
+        textViewServiceTime.setText(serviceTime);
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        serviceDate = DateFormat.getDateInstance(DateFormat.DEFAULT).format(c.getTime());
+        textViewServiceDate.setText(serviceDate);
+
+
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -369,8 +432,8 @@ public class SocialServiceInputActivity extends AppCompatActivity {
     {
         socialTextString = socialText.getText().toString();
 
-        serviceDateString = serviceDate.getText().toString();
-        serviceTimeString = serviceTime.getText().toString();
+//        serviceDateString = serviceDate.getText().toString();
+//        serviceTimeString = serviceTime.getText().toString();
 
         String NumberOfPeopleFirebase = numberOfPeople.getText().toString();
 
@@ -378,15 +441,14 @@ public class SocialServiceInputActivity extends AppCompatActivity {
         {
             Toast.makeText(this, "Please write a description", Toast.LENGTH_SHORT).show();
         }
-        else if(TextUtils.isEmpty(serviceTimeString)){
+
+        else if(TextUtils.isEmpty(serviceTime)){
             Toast.makeText(this, "Select the time please!", Toast.LENGTH_SHORT).show();
         }
-        else if(TextUtils.isEmpty(serviceDateString)){
+        else if(TextUtils.isEmpty(serviceDate)){
             Toast.makeText(this, "Select the date please!", Toast.LENGTH_SHORT).show();
         }
-        else if(TextUtils.isEmpty(serviceTimeStringType)){
-            Toast.makeText(this, "Select time correctly!", Toast.LENGTH_SHORT).show();
-        }
+
 
 //        else if(TextUtils.isEmpty(typeOfSocial))
 //        {
@@ -405,7 +467,7 @@ public class SocialServiceInputActivity extends AppCompatActivity {
             SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a") ;
             currentTime=currentTimeFormat.format(calForTime.getTime());
 
-            String SocialKey = RootRef.child(phoneNum).child("Social Service").push().getKey();
+            String SocialKey = RootRef.child("Social Service").child(phoneNum).push().getKey();
 
             firebaseAddress = textViewAddressSocial.getText().toString();
 
@@ -428,8 +490,10 @@ public class SocialServiceInputActivity extends AppCompatActivity {
             SocialMap.put("longitude", firebaseLng);
             SocialMap.put("user_address", firebaseAddress);
             SocialMap.put("Number of People valid", NumberOfPeopleFirebase);
-            SocialMap.put("Date of Service", serviceDateString);
-            SocialMap.put("Time of Service", serviceTimeString + " " + serviceTimeStringType);
+            SocialMap.put("Date of Service", serviceDate);
+            SocialMap.put("Time of Service", serviceTime);
+//            SocialMap.put("Date of Service", serviceDateString);
+//            SocialMap.put("Time of Service", serviceTimeString + " " + serviceTimeStringType);
 
 
 
@@ -437,7 +501,7 @@ public class SocialServiceInputActivity extends AppCompatActivity {
 
 
 
-            RootRef.child("users").child(phoneNum).child("Social Service").child(SocialKey).updateChildren(SocialMap)
+            RootRef.child("Social Service").child(phoneNum).child(SocialKey).updateChildren(SocialMap)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task)
