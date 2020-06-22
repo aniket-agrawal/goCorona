@@ -1,23 +1,18 @@
 package com.example.login;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.ResultReceiver;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -68,7 +63,6 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
 
     private String currentDate, currentTime;
-    private final static int GPS_REQUEST_CODE = 9003;
 
 
 
@@ -117,10 +111,6 @@ public class FeedBackFormActivity extends AppCompatActivity {
         getCurrentLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(isGPSEnabled()){
-                    Toast.makeText(FeedBackFormActivity.this, "You are good to go!", Toast.LENGTH_SHORT).show();
-                }
                 if (ContextCompat.checkSelfPermission(
                         getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED) {
@@ -393,46 +383,8 @@ public class FeedBackFormActivity extends AppCompatActivity {
         finish();
     }
 
-
-    private boolean isGPSEnabled(){
-
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-        boolean providerEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-        if(providerEnabled){
-            return true;
-        }
-        else{
-            AlertDialog alertDialog = new AlertDialog.Builder(this)
-                    .setTitle("GPS Permissions")
-                    .setMessage("To Improve accuracy please set your settings to high accuracy.")
-                    .setPositiveButton("Yes",(new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                            startActivityForResult(intent, GPS_REQUEST_CODE );
-                        }
-                    }))
-                    .show();
-        }
-
-        return false;
+    public void tellAboutAddress(View view)
+    {
+        Toast.makeText(this, "In case the Address does not match the address of your current location please mention the required address manually", Toast.LENGTH_LONG).show();
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == GPS_REQUEST_CODE){
-            if(isGPSEnabled()){
-                Toast.makeText(this, "GPS is enabled", Toast.LENGTH_SHORT).show();
-            }
-            else{
-                Toast.makeText(this, "Current Location may have errors!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
 }
