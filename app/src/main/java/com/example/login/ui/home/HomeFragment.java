@@ -23,7 +23,7 @@ public class HomeFragment extends Fragment {
     private PhotoView i1,i2,i4,i3,i5;
     private Button b;
     private Fragment fragment;
-    private TextView cnfcases;
+    private TextView cnfcases,deaths,recovery,active;
 
     private String url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/India_COVID-19_cases_density_map.svg/768px-India_COVID-19_cases_density_map.svg.png";
     private String url1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/COVID-19_India_Total_Cases_Animated_Map.gif/800px-COVID-19_India_Total_Cases_Animated_Map.gif";
@@ -39,6 +39,9 @@ public class HomeFragment extends Fragment {
         i1 = root.findViewById(R.id.imageView1);
         b = (Button)getActivity().findViewById(R.id.button3);
         cnfcases=(TextView)root.findViewById(R.id.cnfcases);
+        deaths=(TextView)root.findViewById(R.id.deaths);
+        recovery=(TextView)root.findViewById(R.id.recovery);
+        active=(TextView)root.findViewById(R.id.active);
         new doit().execute();
         b.setVisibility(View.VISIBLE);
         fragment = this;
@@ -67,7 +70,7 @@ public class HomeFragment extends Fragment {
     public class doit extends AsyncTask<Void,Void,Void> {
 
         String words;
-        String w="";
+        String w="",d="",r="",a="";
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -75,10 +78,40 @@ public class HomeFragment extends Fragment {
             try {
                 org.jsoup.nodes.Document doc = (org.jsoup.nodes.Document) Jsoup.connect(s1).get();
                 words = doc.text();
-                int x= words.indexOf("Bihar")+6;
+                int x= words.indexOf("Kerala")+7;
                 while(words.charAt(x)!=' '){
-                    System.out.println(w);
+                    if(words.charAt(x)=='['){
+                        x+=3;
+                        break;
+                    }
                     w+=words.charAt(x);
+                    x++;
+                }
+                x++;
+                while(words.charAt(x)!=' '){
+                    if(words.charAt(x)=='['){
+                        x+=3;
+                        break;
+                    }
+                    d+=words.charAt(x);
+                    x++;
+                }
+                x++;
+                while(words.charAt(x)!=' '){
+                    if(words.charAt(x)=='['){
+                        x+=3;
+                        break;
+                    }
+                    r+=words.charAt(x);
+                    x++;
+                }
+                x++;
+                while(words.charAt(x)!=' '){
+                    if(words.charAt(x)=='['){
+                        x+=3;
+                        break;
+                    }
+                    a+=words.charAt(x);
                     x++;
                 }
                 x++;
@@ -91,6 +124,9 @@ public class HomeFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             cnfcases.setText(w);
+            deaths.setText(d);
+            recovery.setText(r);
+            active.setText(a);
 
         }
     }
