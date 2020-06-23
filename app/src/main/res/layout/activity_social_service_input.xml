@@ -23,6 +23,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/backbutton"/>
+
     <!--    -->
 <!--    <LinearLayout-->
 <!--        android:layout_width="match_parent"-->
