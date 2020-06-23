@@ -253,6 +253,102 @@
                 android:textColor="#000000"
                 android:textSize="20sp" />
 
+            <Button
+                android:id="@+id/orange"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignTop="@id/imageView"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="405dp"
+                android:background="#FF5722" />
+
+            <TextView
+                android:id="@+id/oranget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/imageView"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="415dp"
+                android:layout_toRightOf="@id/orange"
+                android:text="Total confirmed cases"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/yellow"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignTop="@id/imageView"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="405dp"
+                android:layout_toRightOf="@id/oranget"
+                android:background="#FFC107"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/imageView"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="415dp"
+                android:layout_toRightOf="@id/yellow"
+                android:text="Active cases"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/blue"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignTop="@id/imageView"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="455dp"
+                android:background="#03A9F4" />
+
+            <TextView
+                android:id="@+id/bluet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/imageView"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="465dp"
+                android:layout_toRightOf="@id/blue"
+                android:text="Recoveries"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/black"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignTop="@id/imageView"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="455dp"
+                android:layout_toRightOf="@id/oranget"
+                android:background="#000000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/imageView"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="465dp"
+                android:layout_toRightOf="@id/black"
+                android:text="Deaths"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+
+
+            <com.github.chrisbanes.photoview.PhotoView
+                android:id="@+id/imageView6"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_alignTop="@id/imageView"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="500dp"/>
+
+
 
             <View
                 android:id="@+id/divider"
