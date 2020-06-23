@@ -22,6 +22,7 @@ import android.os.Looper;
 import android.os.ResultReceiver;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -71,6 +72,8 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
     private double firebaseLat, firebaseLng;
     private String firebaseAddress;
 
+    private ImageButton backButton;
+
 
     private String socialTextString="";
 
@@ -102,9 +105,18 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_social_service_input);
 
+
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
 //        serviceDate = findViewById(R.id.editTextDate);
 //        serviceTime = findViewById(R.id.editTextTime);
 
+
+
+        backButton = findViewById(R.id.back_button);
 
 
         getCurrentLocationButton = findViewById(R.id.button_get_current_location_social);
@@ -141,6 +153,13 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
 
         socialText = findViewById(R.id.social_text);
 
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SendUserToMainPage();
+            }
+        });
 
 
         getCurrentLocationButton.setOnClickListener(new View.OnClickListener() {
@@ -275,6 +294,18 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
 
 
     }
+
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//
+//        int id = item.getItemId();
+//
+//        if(id == android.R.id.home){
+//            this.finish();
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
