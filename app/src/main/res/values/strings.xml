@@ -18,7 +18,7 @@
     <string name="map1"><u>Map of active COVID-19 cases in India</u></string>
     <string name="refresh">Refresh</string>
     <string name="emergency_contact_number"><u>Emergency Contact Number</u>\n 1075 or 011-23978046.</string>
-    <string name="confirmed_cases_of_covid_19_cases_in_india_by_state_and_ut"><u>Timeline of the pandemic spread across India</u></string>
+    <string name="confirmed_cases_of_covid_19_cases_in_india_by_state_and_ut"><u>Confirmed cases of COVID-19 cases in India</u></string>
     <string name="map_covid_19_deaths_in_india"><u>Map COVID-19 deaths in India</u></string>
     <string name="our_analysis"><u>Govt. Analysis</u></string>
     <string name="your_state_name"><u>Bihar</u></string>
