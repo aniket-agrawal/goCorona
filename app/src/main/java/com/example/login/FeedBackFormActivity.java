@@ -325,7 +325,7 @@ public class FeedBackFormActivity extends AppCompatActivity {
                 SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a") ;
                 currentTime=currentTimeFormat.format(calForTime.getTime());
 
-                String feedbackKey = RootRef.child(phoneNum).child("feedback").push().getKey();
+                String feedbackKey = RootRef.child("users").child(phoneNum).child("feedback").push().getKey();
 
                 firebaseAddress = textViewAddress.getText().toString();
 
