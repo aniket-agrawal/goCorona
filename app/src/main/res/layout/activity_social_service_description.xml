@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SocialServiceDescriptionActivity">
+
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="40dp"
+        android:layout_height="45dp"
+        android:background="@drawable/backbutton"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/provider_name"
+        android:text="Provider Name"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:id="@+id/type_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/provider_name"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:text="type of service"
+        android:padding="10dp"
+        android:layout_marginTop="15dp"
+        />
+
+    <TextView
+        android:id="@+id/date_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/type_service"
+
+        android:textStyle="bold"
+        android:text="date of service"
+        android:padding="10dp"
+        android:layout_marginTop="15dp"
+        />
+    <TextView
+        android:id="@+id/time_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/type_service"
+        android:layout_alignParentRight="true"
+        android:textStyle="bold"
+        android:text="time of service"
+        android:padding="10dp"
+        android:layout_marginTop="15dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/description_service"
+        android:text="Description"
+        android:layout_below="@+id/date_service"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/address_service"
+        android:text="Address of service"
+        android:layout_below="@+id/description_service"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/info_location_button"
+        android:text="To see directions to service location click on button below"
+        android:layout_below="@+id/address_service"
+        android:layout_centerHorizontal="true"
+
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        />
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/info_location_button"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/navigation"/>
+
+
+
+
+</RelativeLayout>
