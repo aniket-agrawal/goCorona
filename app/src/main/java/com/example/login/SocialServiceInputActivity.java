@@ -1,13 +1,5 @@
 package com.example.login;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
-
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -22,7 +14,6 @@ import android.os.Looper;
 import android.os.ResultReceiver;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,12 +22,18 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -57,7 +54,6 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
 
     private Spinner spinner;
     private String typeOfSocial="";
-    private EditText customSocial;
 //    private EditText serviceTime,serviceDate;
 //    private RadioGroup radioGroup;
 //    private RadioButton radioButton;
@@ -184,7 +180,6 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
         spinner = (Spinner) findViewById(R.id.spinner_social_type);
 
 //        timeSpinner = (Spinner) findViewById(R.id.spinner_am_pm);
-        customSocial = findViewById(R.id.custom_social_type);
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.type0fService));
 
@@ -206,31 +201,27 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
 
                 if(position==1)
                 {
-                    customSocial.setVisibility(View.INVISIBLE);
                     typeOfSocial = "Providing Food";
                 }
 
                 if(position==2)
                 {
-                    customSocial.setVisibility(View.INVISIBLE);
                     typeOfSocial = "Providing Essential Items other than Food";
                 }
 
                 if(position==3)
                 {
-                    customSocial.setVisibility(View.INVISIBLE);
                     typeOfSocial = "Providing Work to Poor or Monetary help";
                 }
 
                 if(position==4)
                 {
-                    customSocial.setVisibility(View.INVISIBLE);
                     typeOfSocial = "Providing Masks or Sanitizers";
                 }
 
                 if(position==5)
                 {
-                    customSocial.setVisibility(View.VISIBLE);
+                    typeOfSocial = "Custom" ;
                 }
 
 
@@ -504,10 +495,6 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
 
 
 
-            if(typeOfSocial.equals(""))
-            {
-                typeOfSocial = customSocial.getText().toString();
-            }
 
             HashMap<String, Object> SocialMap = new HashMap<>();
             SocialMap.put("uid", currentUserId);
