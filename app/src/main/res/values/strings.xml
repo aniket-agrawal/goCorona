@@ -41,6 +41,56 @@
 
     </string-array>
 
+
+
+    <string-array name="stateList">
+
+
+        <item><u>Select Your State</u></item>
+        <item><u>Andaman and Nicobar Islands</u></item>
+        <item><u>Andhra Pradesh</u></item>
+        <item><u>Arunachal Pradesh</u></item>
+        <item><u>Assam</u></item>
+        <item><u>Bihar</u></item>
+        <item><u>Chandigarh</u></item>
+        <item><u>Chhattisgarh</u></item>
+        <item><u>Dadra and Nagar Haveli and Daman and Diu</u></item>
+        <item><u>Delhi</u></item>
+        <item><u>Goa</u></item>
+        <item><u>Gujarat</u></item>
+        <item><u>Haryana</u></item>
+        <item><u>Himachal Pradesh</u></item>
+        <item><u>Jammu and Kashmir</u></item>
+        <item><u>Jharkhand</u></item>
+        <item><u>Karnataka</u></item>
+        <item><u>Kerala</u></item>
+        <item><u>Ladakh</u></item>
+        <item><u>Lakshadweep</u></item>
+        <item><u>Madhya Pradesh</u></item>
+        <item><u>Maharashtra</u></item>
+        <item><u>Manipur</u></item>
+        <item><u>Meghalaya</u></item>
+        <item><u>Mizoram</u></item>
+        <item><u>Nagaland</u></item>
+        <item><u>Odisha</u></item>
+        <item><u>Puducherry</u></item>
+        <item><u>Punjab</u></item>
+        <item><u>Rajasthan</u></item>
+        <item><u>Sikkim</u></item>
+        <item><u>Tamil Nadu</u></item>
+        <item><u>Telangana</u></item>
+        <item><u>Tripura</u></item>
+        <item><u>Uttar Pradesh</u></item>
+        <item><u>Uttarakhand</u></item>
+        <item><u>West Bengal</u></item>
+
+
+
+    </string-array>
+
+
+
+
     <string-array name="type0fService">
 
 
