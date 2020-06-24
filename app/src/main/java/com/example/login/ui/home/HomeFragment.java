@@ -23,7 +23,8 @@ public class HomeFragment extends Fragment {
     private PhotoView i1,i2,i4,i3,i5,i6;
     private Button b;
     private Fragment fragment;
-    private TextView cnfcases,deaths,recovery,active;
+    private TextView cnfcases,deaths,recovery,active,st;
+    private String state;
 
     private String url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/India_COVID-19_cases_density_map.svg/768px-India_COVID-19_cases_density_map.svg.png";
     private String url1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/COVID-19_India_Total_Cases_Animated_Map.gif/800px-COVID-19_India_Total_Cases_Animated_Map.gif";
@@ -39,10 +40,13 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         i1 = root.findViewById(R.id.imageView1);
         b = (Button)getActivity().findViewById(R.id.button3);
+        st=(TextView)root.findViewById(R.id.textView);
         cnfcases=(TextView)root.findViewById(R.id.cnfcases);
         deaths=(TextView)root.findViewById(R.id.deaths);
         recovery=(TextView)root.findViewById(R.id.recovery);
         active=(TextView)root.findViewById(R.id.active);
+        state = getState(", Bihar 842001, India");
+        st.setText(state);
         new doit().execute();
         b.setVisibility(View.VISIBLE);
         fragment = this;
@@ -81,7 +85,7 @@ public class HomeFragment extends Fragment {
             try {
                 org.jsoup.nodes.Document doc = (org.jsoup.nodes.Document) Jsoup.connect(s1).get();
                 words = doc.text();
-                int x= words.indexOf("Kerala")+7;
+                int x= words.indexOf(state)+state.length()+1;
                 while(words.charAt(x)!=' '){
                     if(words.charAt(x)=='['){
                         x+=3;
@@ -132,6 +136,17 @@ public class HomeFragment extends Fragment {
             active.setText(a);
 
         }
+    }
+
+    public String getState(String state){
+        int x = state.length();
+        x-=15;
+        String res="";
+        while(state.charAt(x)!=','){
+            res = state.charAt(x) + res;
+            x--;
+        }
+        return res.substring(1);
     }
 
 }
