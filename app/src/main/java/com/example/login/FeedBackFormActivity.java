@@ -147,30 +147,32 @@ public class FeedBackFormActivity extends AppCompatActivity {
             {
 
 
-                if(position==1)
-                {
-                        typeOfFeedBack = "Reporting a nearby corona case";
-                }
+//                if(position==1)
+//                {
+//                        typeOfFeedBack = "Reporting a nearby corona case";
+//                }
+//
+//                if(position==2)
+//                {
+//                        typeOfFeedBack = "Need Govt. support";
+//                }
+//
+//                if(position==3)
+//                {
+//                    typeOfFeedBack = "Queries Regarding Lockdown";
+//                }
+//
+//                if(position==4)
+//                {
+//                    typeOfFeedBack = "Lack of Medical Facilities";
+//                }
+//
+//                if(position==5)
+//                {
+//                    typeOfFeedBack = "Custom";
+//                }
 
-                if(position==2)
-                {
-                        typeOfFeedBack = "Need Govt. support";
-                }
-
-                if(position==3)
-                {
-                    typeOfFeedBack = "Queries Regarding Lockdown";
-                }
-
-                if(position==4)
-                {
-                    typeOfFeedBack = "Lack of Medical Facilities";
-                }
-
-                if(position==5)
-                {
-                    typeOfFeedBack = "Custom";
-                }
+                typeOfFeedBack = parent.getItemAtPosition(position).toString();
 
 
 

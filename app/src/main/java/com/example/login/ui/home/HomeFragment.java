@@ -5,14 +5,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.login.FeedBackFormActivity;
 import com.example.login.R;
 import com.github.chrisbanes.photoview.PhotoView;
 
@@ -25,6 +30,7 @@ public class HomeFragment extends Fragment {
     private Fragment fragment;
     private TextView cnfcases,deaths,recovery,active,st;
     private String state;
+    private Spinner spinner;
 
     private String url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/India_COVID-19_cases_density_map.svg/768px-India_COVID-19_cases_density_map.svg.png";
     private String url1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/COVID-19_India_Total_Cases_Animated_Map.gif/800px-COVID-19_India_Total_Cases_Animated_Map.gif";
@@ -45,8 +51,53 @@ public class HomeFragment extends Fragment {
         deaths=(TextView)root.findViewById(R.id.deaths);
         recovery=(TextView)root.findViewById(R.id.recovery);
         active=(TextView)root.findViewById(R.id.active);
-        state = getState(", Bihar 842001, India");
-        st.setText(state);
+//        state = getState(", Bihar 842001, India");
+
+
+
+
+
+
+
+        spinner = (Spinner) root.findViewById(R.id.spinner_state);
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(getContext(),
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.stateList));
+
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(myAdapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+
+
+                state = parent.getItemAtPosition(position).toString();
+                Toast.makeText(getContext(), state, Toast.LENGTH_SHORT).show();
+
+
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(getContext(), "Please select the State", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+//        st.setText(state);
         new doit().execute();
         b.setVisibility(View.VISIBLE);
         fragment = this;
