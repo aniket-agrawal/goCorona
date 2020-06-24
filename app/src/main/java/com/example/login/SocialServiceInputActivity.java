@@ -42,8 +42,11 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -94,6 +97,7 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
     private final static int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private final static int GPS_REQUEST_CODE = 9003;
     private ResultReceiver resultReceiver;
+    private String name;
 
 
     @Override
@@ -154,6 +158,21 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
             @Override
             public void onClick(View v) {
                 SendUserToMainPage();
+            }
+        });
+
+        RootRef = FirebaseDatabase.getInstance().getReference();
+
+        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                name = dataSnapshot.child("users").child(phoneNum).child("Name").getValue().toString();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
@@ -317,7 +336,7 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-        serviceDate = DateFormat.getDateInstance(DateFormat.DEFAULT).format(c.getTime());
+        serviceDate = DateFormat.getDateInstance(DateFormat.SHORT).format(c.getTime());
         textViewServiceDate.setText(serviceDate);
 
 
@@ -489,7 +508,7 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
             SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a") ;
             currentTime=currentTimeFormat.format(calForTime.getTime());
 
-            String SocialKey = RootRef.child("Social Service").child(phoneNum).push().getKey();
+            String SocialKey = RootRef.child("Social Service").push().getKey();
 
             firebaseAddress = textViewAddressSocial.getText().toString();
 
@@ -510,6 +529,9 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
             SocialMap.put("Number of People valid", NumberOfPeopleFirebase);
             SocialMap.put("Date of Service", serviceDate);
             SocialMap.put("Time of Service", serviceTime);
+            SocialMap.put("Phone Number", phoneNum);
+            SocialMap.put("User Name", name);
+
 //            SocialMap.put("Date of Service", serviceDateString);
 //            SocialMap.put("Time of Service", serviceTimeString + " " + serviceTimeStringType);
 
@@ -519,7 +541,7 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
 
 
 
-            RootRef.child("Social Service").child(phoneNum).child(SocialKey).updateChildren(SocialMap)
+            RootRef.child("Social Service").child(SocialKey).updateChildren(SocialMap)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task)

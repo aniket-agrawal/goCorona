@@ -38,6 +38,7 @@ public class Registration extends AppCompatActivity {
     ArrayAdapter<String> myAdapter;
     private DatabaseReference rootref;
     private FirebaseAuth mAuth;
+    private String currentUserId;
 
     private int b=1;
 
@@ -46,6 +47,7 @@ public class Registration extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         mAuth = FirebaseAuth.getInstance();
+        currentUserId = mAuth.getCurrentUser().getUid();
         Intent i = getIntent();
         phone = i.getStringExtra("mkey");
         t=(TextView)findViewById(R.id.textView8);
@@ -135,6 +137,7 @@ public class Registration extends AppCompatActivity {
             rootref=FirebaseDatabase.getInstance().getReference();
             HashMap<String, Object> userdataMap=new HashMap<>();
             userdataMap.put("Name", name);
+            userdataMap.put("uid", currentUserId);
             userdataMap.put("Age", age);
             userdataMap.put("Safety", safety);
             userdataMap.put("Gender", gender);
