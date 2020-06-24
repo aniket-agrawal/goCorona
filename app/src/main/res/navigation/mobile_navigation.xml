@@ -29,11 +29,6 @@
         android:label="activity_feed_back_form"
         tools:layout="@layout/activity_feed_back_form" />
 
-    <activity
-        android:id="@+id/main2Activity"
-        android:name="com.example.login.Main2Activity"
-        android:label="activity_main2"
-        tools:layout="@layout/activity_main2" />
 
     <activity
     android:id="@+id/SocialService"

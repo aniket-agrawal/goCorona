@@ -169,7 +169,7 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
                 if(position==5)
                 {
-                    typeOfFeedBack = "Others";
+                    typeOfFeedBack = "Custom";
                 }
 
 

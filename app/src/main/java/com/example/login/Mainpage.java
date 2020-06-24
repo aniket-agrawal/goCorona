@@ -68,7 +68,7 @@ public class Mainpage extends AppCompatActivity {
         t.setText("+91-"+phone);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.feedBackFormActivity2,R.id.nav_slideshow, R.id.SocialService)
+                R.id.nav_home, R.id.feedBackFormActivity2,R.id.nav_slideshow, R.id.SocialService,R.id.nav_gallery)
                 .setDrawerLayout(drawer)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
