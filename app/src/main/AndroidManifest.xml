@@ -14,8 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SocialServiceInputActivity"></activity>
-        <!-- <meta-data -->
+        <activity android:name=".SocialServiceDescriptionActivity"></activity>
+        <activity android:name=".SocialServiceInputActivity" /> <!-- <meta-data -->
         <!-- android:name="com.google.android.API_KEY" -->
         <!-- android:value="AIzaSyDxAtobILg8DNQaZmn0a9Xdm9wkWLl928A" /> -->
         <activity android:name=".Registration" />
