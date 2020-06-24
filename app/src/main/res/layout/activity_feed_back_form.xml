@@ -19,7 +19,7 @@
     <ImageButton
         android:id="@+id/back_button_feedback"
         android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:background="@drawable/backbutton"/>
 
 
@@ -123,7 +123,8 @@
         android:layout_marginTop="11dp"
         android:background="@drawable/edittext"
         android:gravity="top"
-        android:hint=" Detailed description of your problem."
+        android:padding="10dp"
+        android:hint="Detailed description of your problem."
         android:textColor="#000000"
         android:textColorHint="#000000"
         android:textSize="18dp" />
