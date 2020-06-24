@@ -1,6 +1,5 @@
 package com.example.login.ui.gallery;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +15,16 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
-    private Context mcontext;
     private ArrayList<String> profileNameList;
     private ArrayList<String> profilePhoneList;
+    private ArrayList<String> dateandtimeList;
+    private ArrayList<String> seatList;
 
-    public ListAdapter(Context context, ArrayList<String> profileNameList, ArrayList<String> profileNumberList) {
-        this.mcontext = context;
+    public ListAdapter(ArrayList<String> profileNameList, ArrayList<String> profileNumberList, ArrayList<String> seatList, ArrayList<String> dateandtimeList) {
         this.profileNameList = profileNameList;
         this.profilePhoneList = profileNumberList;
+        this.seatList = seatList;
+        this.dateandtimeList = dateandtimeList;
     }
 
     @NonNull
@@ -62,6 +63,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         public void bindView(int position){
             name.setText(profileNameList.get(position));
             number.setText(profilePhoneList.get(position));
+            date.setText(dateandtimeList.get(position));
+            seat.setText(seatList.get(position));
         }
 
         public void onClick(View view){

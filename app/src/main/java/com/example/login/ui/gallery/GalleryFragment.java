@@ -28,14 +28,10 @@ public class GalleryFragment extends Fragment {
     Button b;
     private Fragment fragment;
     private ArrayList<String> profileNameList= new ArrayList<>();
+    private ArrayList<String> seatList= new ArrayList<>();
+    private ArrayList<String> dateandtimeList= new ArrayList<>();
     private ArrayList<String> profileNumberList= new ArrayList<>();
     private DatabaseReference reff;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        readUsers();
-    }
 
     private void readUsers() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Social Service");
@@ -46,6 +42,8 @@ public class GalleryFragment extends Fragment {
                 if(dataSnapshot.exists()){
                     profileNameList.clear();
                     profileNumberList.clear();
+                    seatList.clear();
+                    dateandtimeList.clear();
                     Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
                     Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
 
@@ -56,8 +54,16 @@ public class GalleryFragment extends Fragment {
                         reff.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
-                                String name = dataSnapshot1.child("name").getValue().toString();
-                                String phone = dataSnapshot1.child("phone").getValue().toString();
+                                String name = dataSnapshot1.child("User Name").getValue().toString();
+                                String phone = dataSnapshot1.child("Phone Number").getValue().toString();
+                                String date = dataSnapshot1.child("Date of Service").getValue().toString();
+                                String time = dataSnapshot1.child("Time of Service").getValue().toString();
+                                String seat = dataSnapshot1.child("Number of People valid").getValue().toString();
+                                seatList.add(seat);
+                                dateandtimeList.add(time+", "+date);
+                                profileNameList.add(name);
+                                profileNumberList.add(phone);
+                                initReceivedRecyclerView();
                             }
 
                             @Override
@@ -74,12 +80,21 @@ public class GalleryFragment extends Fragment {
 
             }
         };
+        query.addValueEventListener(queryValueListener);
     }
 
+    private void initReceivedRecyclerView() {
+        RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
+        ListAdapter listAdapter = new ListAdapter(profileNameList, profileNumberList,seatList,dateandtimeList);
+        recyclerView.setAdapter(listAdapter);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
         b = (Button)getActivity().findViewById(R.id.button3);
+        b.setVisibility(View.VISIBLE);
         fragment = this;
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,16 +102,7 @@ public class GalleryFragment extends Fragment {
                 getFragmentManager().beginTransaction().detach(fragment).attach(fragment).commit();
             }
         });
-        profileNumberList.add("9636541817");
-        profileNumberList.add("9308365765");
-        profileNameList.add("Aniket Agrawal");
-        profileNameList.add("Mummy");
-        System.out.println(profileNameList.size());
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
-        ListAdapter listAdapter = new ListAdapter(getContext(),profileNameList,profileNumberList);
-        recyclerView.setAdapter(listAdapter);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        readUsers();
         return root;
     }
 }

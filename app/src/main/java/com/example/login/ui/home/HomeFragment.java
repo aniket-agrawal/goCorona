@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.login.FeedBackFormActivity;
 import com.example.login.R;
 import com.github.chrisbanes.photoview.PhotoView;
 
@@ -51,13 +50,6 @@ public class HomeFragment extends Fragment {
         deaths=(TextView)root.findViewById(R.id.deaths);
         recovery=(TextView)root.findViewById(R.id.recovery);
         active=(TextView)root.findViewById(R.id.active);
-//        state = getState(", Bihar 842001, India");
-
-
-
-
-
-
 
         spinner = (Spinner) root.findViewById(R.id.spinner_state);
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(getContext(),
@@ -73,9 +65,18 @@ public class HomeFragment extends Fragment {
 
 
                 state = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getContext(), state, Toast.LENGTH_SHORT).show();
-
-
+                if(state.equals("Select Your Region")){
+                    cnfcases.setText("");
+                    deaths.setText("");
+                    recovery.setText("");
+                    active.setText("");
+                }
+                else{
+                    if(state.equals("India")){
+                        state = "36";
+                    }
+                    new doit().execute();
+                }
 
 
             }
@@ -97,8 +98,6 @@ public class HomeFragment extends Fragment {
 
 
 
-//        st.setText(state);
-        new doit().execute();
         b.setVisibility(View.VISIBLE);
         fragment = this;
         b.setOnClickListener(new View.OnClickListener() {
