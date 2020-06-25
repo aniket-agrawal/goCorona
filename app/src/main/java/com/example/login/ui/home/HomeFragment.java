@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
     private String url4 = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/India_COVID-19_active_cases_map.svg/800px-India_COVID-19_active_cases_map.svg.png";
     private String url5 = "https://www.deccanherald.com/sites/dh/files/article_images/2020/05/21/photo_2020-05-21_12-48-09.jpg";
     private String s1 = "https://en.wikipedia.org/wiki/Template:COVID-19_pandemic_data/India_medical_cases_by_state_and_union_territory#Total_confirmed_cases,_active_cases,_recoveries_and_deaths";
-    private String url6 = "https://en.wikipedia.org/api/rest_v1/page/graph/png/COVID-19_pandemic_in_India/0/e94488d426b09c386768e02269cc209c54b1837e.png";
+    private String url6 = "https://en.wikipedia.org/api/rest_v1/page/graph/png/COVID-19_pandemic_in_India/0/134be6005839213adff16cc7cf8f46a07dd62f72.png";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
@@ -109,7 +109,7 @@ public class HomeFragment extends Fragment {
         Glide.with(getContext()).load(url1).diskCacheStrategy(DiskCacheStrategy.NONE ).skipMemoryCache(true).into(i2);
         Glide.with(getContext()).load(url3).diskCacheStrategy(DiskCacheStrategy.NONE ).skipMemoryCache(true).into(i4);
         Glide.with(getContext()).load(url5).diskCacheStrategy(DiskCacheStrategy.NONE ).skipMemoryCache(true).into(i5);
-        //Glide.with(getContext()).load(url6).diskCacheStrategy(DiskCacheStrategy.NONE ).skipMemoryCache(true).into(i6);
+        Glide.with(getContext()).load(url6).diskCacheStrategy(DiskCacheStrategy.NONE ).skipMemoryCache(true).into(i6);
         return root;
     }
 

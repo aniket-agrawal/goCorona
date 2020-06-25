@@ -54,6 +54,7 @@ public class GalleryFragment extends Fragment {
     private double finalLatitude=0, finalLongitude=0;
     SimpleDateFormat curentDateFormat,currentTimeFormat;
     Calendar calForDate,calForTime;
+    String image;
     Activity activity;
     private final static int REQUEST_CODE_LOCATION_PERMISSION = 1;
 
@@ -85,7 +86,6 @@ public class GalleryFragment extends Fragment {
                                 String name = dataSnapshot1.child("User Name").getValue().toString();
                                 String phone = dataSnapshot1.child("Phone Number").getValue().toString();
                                 String date = dataSnapshot1.child("Date of Service").getValue().toString();
-                                String image = dataSnapshot1.child("image").getValue().toString();
                                 String time = dataSnapshot1.child("Time of Service").getValue().toString();
                                 if(time.charAt(1)==':'){
                                     time = '0' + time;
@@ -94,7 +94,6 @@ public class GalleryFragment extends Fragment {
                                 double clat = dataSnapshot1.child("latitude").getValue(double.class);
                                 double clang = dataSnapshot1.child("longitude").getValue(double.class);
                                 double  distance = distcheck(finalLatitude,clat,finalLongitude,clang);
-                                System.out.println(String.valueOf(distance)+" K.M.");
                                 calForDate = Calendar.getInstance();
                                 curentDateFormat = new SimpleDateFormat("dd/MM/yyyy") ;
                                 currentDate=curentDateFormat.format(calForDate.getTime());
@@ -109,8 +108,20 @@ public class GalleryFragment extends Fragment {
                                         dateandtimeList.add(time + ", " + date);
                                         profileNameList.add(name);
                                         profileNumberList.add(phone);
-                                        imageList.add(image);
-                                        initReceivedRecyclerView();
+                                        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference().child("users").child(phone);
+                                        reference1.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                                                image = dataSnapshot2.child("image").getValue().toString();
+                                                imageList.add(image);
+                                                initReceivedRecyclerView();
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
                                     }
                                 }
 

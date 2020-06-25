@@ -64,7 +64,6 @@ public class SocialServiceDescriptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(SocialServiceDescriptionActivity.this,Mainpage.class);
-                i.putExtra("dest",1);
                 startActivity(i);
                 finish();
             }
