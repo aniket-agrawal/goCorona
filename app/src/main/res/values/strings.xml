@@ -29,6 +29,8 @@
     <string name="description"><u>Description</u></string>
     <string name="location"><u>Location</u></string>
     <string name="approx_distance"><u>Approx. Distance</u></string>
+    <string name="descriptiona"><u>Description</u></string>
+    <string name="address_of_service"><u>Address of service</u></string>
 
     <string-array name="typeoffeedback">
 
