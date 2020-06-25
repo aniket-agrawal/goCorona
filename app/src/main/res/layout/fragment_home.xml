@@ -41,6 +41,10 @@
             android:orientation="vertical">
 
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext">
 
             <Spinner
                 android:id="@+id/spinner_state"
@@ -142,7 +146,7 @@
                 android:text="         "
                 android:textColor="#000000"
                 android:textSize="15sp" />
-
+            </RelativeLayout>
 
             <com.github.chrisbanes.photoview.PhotoView
                 android:id="@+id/imageView2"
@@ -347,14 +351,6 @@
                 android:layout_marginLeft="0dp"
                 android:layout_marginTop="500dp"/>
 
-
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_alignBottom="@id/recovery"
-                android:background="@drawable/gradient" />
 
         </RelativeLayout>
     </ScrollView>
