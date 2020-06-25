@@ -2,6 +2,7 @@ package com.example.login.ui.gallery;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Looper;
@@ -13,11 +14,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.login.FeedBackFormActivity;
 import com.example.login.R;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -139,8 +140,14 @@ public class GalleryFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-        b = (Button)getActivity().findViewById(R.id.button3);
+        Intent intent = new Intent(getActivity(), FeedBackFormActivity.class);
+        getActivity().startActivity(intent);
+        getActivity().finish();
+       /* b = (Button)getActivity().findViewById(R.id.button3);
         b.setVisibility(View.VISIBLE);
+        TextView header = (TextView) getActivity().findViewById(R.id.header);
+        header.setText("Social Service");
+        header.setTextSize(22);
         fragment = this;
 
         if (ContextCompat.checkSelfPermission(
@@ -158,7 +165,7 @@ public class GalleryFragment extends Fragment {
             public void onClick(View v) {
                 getFragmentManager().beginTransaction().detach(fragment).attach(fragment).commit();
             }
-        });
+        });*/
         return root;
     }
 

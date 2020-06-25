@@ -88,15 +88,8 @@ public class HomeFragment extends Fragment {
         });
 
 
-
-
-
-
-
-
-
-
-
+        TextView header = (TextView) getActivity().findViewById(R.id.header);
+        header.setText("Statistics");
 
         b.setVisibility(View.VISIBLE);
         fragment = this;
