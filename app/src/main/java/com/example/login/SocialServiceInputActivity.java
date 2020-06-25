@@ -467,6 +467,7 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
     public void submitSocial(View view)
     {
         UpdateSettings();
+
     }
 
     private void UpdateSettings()
@@ -551,6 +552,7 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
                         {
                             if(task.isSuccessful())
                             {
+                                Toast.makeText(SocialServiceInputActivity.this, "Submitted Successfully", Toast.LENGTH_SHORT).show();
                                 SendUserToMainPage();
                             }
 

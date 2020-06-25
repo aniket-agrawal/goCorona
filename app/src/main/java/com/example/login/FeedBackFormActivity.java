@@ -368,6 +368,7 @@ public class FeedBackFormActivity extends AppCompatActivity {
                             {
                                 if(task.isSuccessful())
                                 {
+                                    Toast.makeText(FeedBackFormActivity.this, "Submitted Successfully", Toast.LENGTH_SHORT).show();
                                     SendUserToMainPage();
                                 }
 
