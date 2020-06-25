@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 public class SocialServiceDescriptionActivity extends AppCompatActivity {
 
     private TextView nameOfProvider, typeOfService, dateOfService, timeOfService, descriptionOfService,addressOfService;
+    double lat,lang;
     String id,name,phone,date,time,seat,description,address;
     DatabaseReference reference;
 
@@ -42,6 +43,8 @@ public class SocialServiceDescriptionActivity extends AppCompatActivity {
                 date = dataSnapshot.child("Date of Service").getValue().toString();
                 date= date.substring(0,6) + "20" + date.substring(6);
                 time = dataSnapshot.child("Time of Service").getValue().toString();
+                lat = dataSnapshot.child("latitude").getValue(double.class);
+                lang = dataSnapshot.child("longitude").getValue(double.class);
                 if(time.charAt(1)==':'){
                     time = '0' + time;
                 }
