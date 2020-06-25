@@ -1,13 +1,16 @@
 package com.example.login;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.ResultReceiver;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +25,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -49,6 +54,7 @@ public class FeedBackFormActivity extends AppCompatActivity {
     private String safetyType="Yes";
     private EditText feedbackText, textViewAddress;
     private String phoneNum;
+    private Button submitButton;
 
     private String currentUserId;
     private FirebaseAuth mAuth;
@@ -65,6 +71,8 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
     private ImageButton backButton;
 
+    private final static int GPS_REQUEST_CODE = 9003;
+
 
 
 
@@ -73,7 +81,7 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
 
     Button getCurrentLocationButton;
-    ProgressBar progressBar;
+    ProgressBar progressBar,progressBarSubmit;
     private final static int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private ResultReceiver resultReceiver;
 
@@ -84,6 +92,7 @@ public class FeedBackFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_feed_back_form);
 
         backButton = findViewById(R.id.back_button_feedback);
+        submitButton = findViewById(R.id.submit_feedback_button);
 
 
         resultReceiver = new AddressResultReceiver(new Handler());
@@ -92,6 +101,7 @@ public class FeedBackFormActivity extends AppCompatActivity {
         textViewAddress = findViewById(R.id.textAddress);
 
         progressBar = findViewById(R.id.progress_dialog);
+        progressBarSubmit = findViewById(R.id.progress_dialog_submit_feedback);
 
 
 
@@ -121,6 +131,9 @@ public class FeedBackFormActivity extends AppCompatActivity {
         getCurrentLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(isGPSEnabled()){
+                    System.out.println("You are good to go!");
+                }
                 if (ContextCompat.checkSelfPermission(
                         getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED) {
@@ -309,6 +322,8 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
     public void submitFeedback(View view)
     {
+        submitButton.setVisibility(View.INVISIBLE);
+        progressBarSubmit.setVisibility(View.VISIBLE);
         UpdateSettings();
     }
 
@@ -376,6 +391,8 @@ public class FeedBackFormActivity extends AppCompatActivity {
                                     {
                                         String message = task.getException().toString();
                                         Toast.makeText(FeedBackFormActivity.this, "Error: "+message, Toast.LENGTH_SHORT).show();
+                                        progressBarSubmit.setVisibility(View.GONE);
+                                        submitButton.setVisibility(View.VISIBLE);
                                     }
                             }
                         });
@@ -400,5 +417,47 @@ public class FeedBackFormActivity extends AppCompatActivity {
     public void tellAboutAddress(View view)
     {
         Toast.makeText(this, "In case the Address does not match the address of your current location please mention the required address manually", Toast.LENGTH_LONG).show();
+    }
+
+
+    private boolean isGPSEnabled(){
+
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        boolean providerEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        if(providerEnabled){
+            return true;
+        }
+        else{
+            AlertDialog alertDialog = new AlertDialog.Builder(this)
+                    .setTitle("GPS Permissions")
+                    .setMessage("To Improve accuracy please set your settings to high accuracy.")
+                    .setPositiveButton("Yes",(new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivityForResult(intent, GPS_REQUEST_CODE );
+                        }
+                    }))
+                    .show();
+        }
+
+        return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == GPS_REQUEST_CODE){
+            if(isGPSEnabled()){
+                Toast.makeText(this, "GPS is enabled", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this, "Current Location may have errors!", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

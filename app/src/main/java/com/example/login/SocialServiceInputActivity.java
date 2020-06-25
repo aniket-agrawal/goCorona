@@ -64,6 +64,8 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
     private EditText socialText, textViewAddressSocial, numberOfPeople;
     private String phoneNum;
 
+    private Button submitButton;
+
     private String currentUserId;
     private FirebaseAuth mAuth;
     private DatabaseReference RootRef;
@@ -93,7 +95,7 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
 
 
     Button getCurrentLocationButton;
-    ProgressBar progressBar;
+    ProgressBar progressBar,progressBarSubmit;
     private final static int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private final static int GPS_REQUEST_CODE = 9003;
     private ResultReceiver resultReceiver;
@@ -117,6 +119,7 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
 
 
         backButton = findViewById(R.id.back_button);
+        submitButton = findViewById(R.id.submit_social_button);
 
 
         getCurrentLocationButton = findViewById(R.id.button_get_current_location_social);
@@ -135,6 +138,7 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
         textViewAddressSocial = findViewById(R.id.textAddress_social);
 
         progressBar = findViewById(R.id.progress_dialog_social);
+        progressBarSubmit = findViewById(R.id.progress_dialog_submit_social);
         numberOfPeople = findViewById(R.id.editTextNumberOfPeople);
 
 
@@ -181,7 +185,7 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
             @Override
             public void onClick(View v) {
                 if(isGPSEnabled()){
-                    Toast.makeText(SocialServiceInputActivity.this, "You are good to go!", Toast.LENGTH_SHORT).show();
+                    System.out.println("You are good to go!");
                 }
                 if (ContextCompat.checkSelfPermission(
                         getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION
@@ -466,6 +470,8 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
 
     public void submitSocial(View view)
     {
+        submitButton.setVisibility(View.INVISIBLE);
+        progressBarSubmit.setVisibility(View.VISIBLE);
         UpdateSettings();
 
     }
@@ -553,6 +559,7 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
                             if(task.isSuccessful())
                             {
                                 Toast.makeText(SocialServiceInputActivity.this, "Submitted Successfully", Toast.LENGTH_SHORT).show();
+
                                 SendUserToMainPage();
                             }
 
@@ -560,6 +567,8 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
                             {
                                 String message = task.getException().toString();
                                 Toast.makeText(SocialServiceInputActivity.this, "Error: "+message, Toast.LENGTH_SHORT).show();
+                                progressBarSubmit.setVisibility(View.GONE);
+                                submitButton.setVisibility(View.VISIBLE);
                             }
                         }
                     });

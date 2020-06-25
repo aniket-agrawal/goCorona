@@ -141,7 +141,20 @@
             android:layout_alignParentBottom="true"
             android:onClick="submitSocial"
             android:background="@drawable/buttons"
+
             />
+
+    <ProgressBar
+        android:id="@+id/progress_dialog_submit_social"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        />
 
     <TextView
         android:id="@+id/text_view_info_date_time"
