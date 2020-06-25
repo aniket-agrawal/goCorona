@@ -19,18 +19,18 @@
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.login.ui.feedback.FeedbackFormFragment"
+        android:name="com.example.login.ui.poster.poster"
         android:label="Poster"
-        tools:layout="@layout/fragment_feedback" />
+        tools:layout="@layout/poster" />
 
-    <activity
+    <fragment
         android:id="@+id/feedBackFormActivity2"
-        android:name="com.example.login.FeedBackFormActivity"
+        android:name="com.example.login.ui.feedbackform.HomeFragment"
         android:label="activity_feed_back_form"
-        tools:layout="@layout/activity_feed_back_form" />
-    <activity
+        tools:layout="@layout/feedbackform" />
+    <fragment
         android:id="@+id/SocialService"
-        android:name="com.example.login.SocialServiceInputActivity"
+        android:name="com.example.login.ui.service.service"
         android:label="activity_feed_back_form"
-        tools:layout="@layout/activity_social_service_input" />
+        tools:layout="@layout/service" />
 </navigation>

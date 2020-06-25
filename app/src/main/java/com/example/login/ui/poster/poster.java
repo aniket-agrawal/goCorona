@@ -1,4 +1,4 @@
-package com.example.login.ui.feedback;
+package com.example.login.ui.poster;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,14 +12,14 @@ import androidx.fragment.app.Fragment;
 
 import com.example.login.R;
 
-public class FeedbackFormFragment extends Fragment {
+public class poster extends Fragment {
 
     Button b;
     TextView header;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_feedback, container, false);
+        View root = inflater.inflate(R.layout.poster, container, false);
         b = (Button)getActivity().findViewById(R.id.button3);
         header = (TextView)getActivity().findViewById(R.id.header);
         header.setText("Awareness");
