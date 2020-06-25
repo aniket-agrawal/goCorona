@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,11 +17,13 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.login.ui.gallery.GalleryFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -40,9 +41,6 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.util.HashMap;
-import java.util.Objects;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Mainpage extends AppCompatActivity {
@@ -58,13 +56,17 @@ public class Mainpage extends AppCompatActivity {
     private StorageReference userProfileImagesReference;
     private ProgressDialog loadingBar;
 
-
-    private final static int REQUEST_CODE_LOCATION_PERMISSION = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainpage);
         setTitle("");
+        Intent i = getIntent();
+        if(i.getIntExtra("dest", 0) == 1) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, new GalleryFragment());
+            transaction.commit();
+        }
         mAuth=FirebaseAuth.getInstance();
         phone=mAuth.getCurrentUser().getPhoneNumber();
         phone=phone.substring(3);

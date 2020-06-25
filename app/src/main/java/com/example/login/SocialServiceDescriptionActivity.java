@@ -24,9 +24,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.login.ui.gallery.GalleryFragment;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -52,7 +50,7 @@ public class SocialServiceDescriptionActivity extends AppCompatActivity {
     private ResultReceiver resultReceiver;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_social_service_description);
         Intent i = getIntent();
@@ -65,16 +63,10 @@ public class SocialServiceDescriptionActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                // Replace whatever is in the fragment_container view with this fragment, and add the transaction to the back stack
-                transaction.replace(R.id.fragment, new GalleryFragment());
-                //transaction.addToBackStack(null);
-
-                // Commit the transaction
-                transaction.commit();
-                //startActivity(new Intent(SocialServiceDescriptionActivity.this,Mainpage.class));
-                //finish();
+                Intent i = new Intent(SocialServiceDescriptionActivity.this,Mainpage.class);
+                i.putExtra("dest",1);
+                startActivity(i);
+                finish();
             }
         });
 
@@ -143,8 +135,6 @@ public class SocialServiceDescriptionActivity extends AppCompatActivity {
 
             }
         });
-
-
 
     }
 
