@@ -38,6 +38,7 @@ public class Mainpage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainpage);
+        setTitle("");
         mAuth=FirebaseAuth.getInstance();
         phone=mAuth.getCurrentUser().getPhoneNumber();
         phone=phone.substring(3);

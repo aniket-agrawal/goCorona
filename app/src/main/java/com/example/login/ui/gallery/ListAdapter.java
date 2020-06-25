@@ -21,13 +21,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     private ArrayList<String> profileNameList;
     private ArrayList<String> profilePhoneList;
     private ArrayList<String> dateandtimeList;
+    private ArrayList<Double> distanceList;
     private ArrayList<String> seatList;
     private ArrayList<String> idList;
     Activity activity;
 
-    public ListAdapter(Activity activity, ArrayList<String> profileNameList, ArrayList<String> profileNumberList, ArrayList<String> seatList, ArrayList<String> dateandtimeList, ArrayList<String> idList) {
+    public ListAdapter(Activity activity, ArrayList<String> profileNameList, ArrayList<String> profileNumberList, ArrayList<String> seatList, ArrayList<String> dateandtimeList, ArrayList<String> idList, ArrayList<Double> distanceList) {
         this.profileNameList = profileNameList;
         this.idList = idList;
+        this.distanceList = distanceList;
         this.activity = activity;
         this.profilePhoneList = profileNumberList;
         this.seatList = seatList;
@@ -54,12 +56,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
     public class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        private TextView number,name,date,seat,id;
+        private TextView number,name,date,seat,id,distance;
         private CircleImageView photo;
 
         public ListViewHolder(View view){
             super(view);
             name = (TextView)view.findViewById(R.id.name);
+            distance = (TextView)view.findViewById(R.id.distance);
             photo = (CircleImageView)view.findViewById(R.id.profileImage);
             number = (TextView)view.findViewById(R.id.phonenumber);
             date = (TextView)view.findViewById(R.id.dateandtime);
@@ -74,6 +77,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             date.setText(dateandtimeList.get(position));
             seat.setText(seatList.get(position));
             id.setText(idList.get(position));
+            double dist = Math.round(distanceList.get(position)*1000.0);
+            if(dist<1000){
+                distance.setText("Within 1 K.M.");
+            }
+            else{
+                distance.setText(String.valueOf(dist/1000.0) + " K.M.");
+            }
         }
 
         public void onClick(View view){

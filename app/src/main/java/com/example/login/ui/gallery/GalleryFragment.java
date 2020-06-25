@@ -91,13 +91,13 @@ public class GalleryFragment extends Fragment {
                                 double clat = dataSnapshot1.child("latitude").getValue(double.class);
                                 double clang = dataSnapshot1.child("longitude").getValue(double.class);
                                 double  distance = distcheck(finalLatitude,clat,finalLongitude,clang);
+                                System.out.println(String.valueOf(distance)+" K.M.");
                                 calForDate = Calendar.getInstance();
                                 curentDateFormat = new SimpleDateFormat("dd/MM/yyyy") ;
                                 currentDate=curentDateFormat.format(calForDate.getTime());
                                 calForTime = Calendar.getInstance();
                                 currentTimeFormat = new SimpleDateFormat("hh:mm a") ;
                                 currentTime=currentTimeFormat.format(calForTime.getTime());
-                                //System.out.println(currentTime);
                                 if(check(date,currentDate,time,currentTime)) {
                                     if(distance<=10) {
                                         distanceList.add(distance);
@@ -132,7 +132,7 @@ public class GalleryFragment extends Fragment {
     private void initReceivedRecyclerView() {
         RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
         activity = getActivity();
-        ListAdapter listAdapter = new ListAdapter(activity, profileNameList, profileNumberList,seatList,dateandtimeList, idList);
+        ListAdapter listAdapter = new ListAdapter(activity, profileNameList, profileNumberList,seatList,dateandtimeList, idList, distanceList);
         recyclerView.setAdapter(listAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -251,8 +251,26 @@ public class GalleryFragment extends Fragment {
         return cmin <= min;
     }
 
-    public double distcheck(double clat,double slat, double clang, double slang){
-        return 0;
+    public double distcheck(double lat1,double lat2, double lon1, double lon2){
+
+
+                lon1 = Math.toRadians(lon1);
+                lon2 = Math.toRadians(lon2);
+                lat1 = Math.toRadians(lat1);
+                lat2 = Math.toRadians(lat2);
+
+                double dlon = lon2 - lon1;
+                double dlat = lat2 - lat1;
+                double a = Math.pow(Math.sin(dlat / 2), 2)
+                        + Math.cos(lat1) * Math.cos(lat2)
+                        * Math.pow(Math.sin(dlon / 2),2);
+
+                double c = 2 * Math.asin(Math.sqrt(a));
+
+                double r = 6371;
+
+                return(c * r);
+
     }
 
 
