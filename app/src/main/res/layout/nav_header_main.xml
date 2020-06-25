@@ -14,19 +14,20 @@
     android:orientation="vertical"
     android:gravity="bottom">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <de.hdodenhof.circleimageview.CircleImageView
+
+        android:id="@+id/set_profile_image"
         android:layout_width="72dp"
-        android:layout_height="64dp"
-        android:contentDescription="@string/nav_header_desc"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.014"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.312"
-        app:srcCompat="@drawable/avatardefault_92824" />
+        android:layout_height="72dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90dp"
+        android:src="@drawable/profile_image"
+        app:civ_border_width="5dp"
+        app:civ_border_color="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        android:layout_marginBottom="10dp"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/texti"
