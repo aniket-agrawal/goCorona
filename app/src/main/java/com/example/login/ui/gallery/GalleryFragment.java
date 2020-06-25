@@ -3,7 +3,6 @@ package com.example.login.ui.gallery;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.LayoutInflater;
@@ -44,8 +43,11 @@ public class GalleryFragment extends Fragment {
     private ArrayList<String> profileNameList= new ArrayList<>();
     private ArrayList<String> seatList= new ArrayList<>();
     private ArrayList<String> dateandtimeList= new ArrayList<>();
+    private ArrayList<Double> latList= new ArrayList<>();
+    private ArrayList<Double> langList= new ArrayList<>();
     private ArrayList<String> profileNumberList= new ArrayList<>();
     private ArrayList<String> idList= new ArrayList<>();
+
     private DatabaseReference reff;
     private String currentDate, currentTime;
     private double finalLatitude=0, finalLongitude=0;
@@ -151,7 +153,6 @@ public class GalleryFragment extends Fragment {
                 getFragmentManager().beginTransaction().detach(fragment).attach(fragment).commit();
             }
         });
-        readUsers();
         return root;
     }
 
@@ -207,12 +208,7 @@ public class GalleryFragment extends Fragment {
 
                             finalLatitude = latitude;
                             finalLongitude = longitude;
-
-                            Toast.makeText(activity, finalLatitude + "      " + finalLongitude, Toast.LENGTH_SHORT).show();
-
-                            Location location = new Location("providerNA");
-                            location.setLatitude(latitude);
-                            location.setLongitude(longitude);
+                            readUsers();
 
 
                         }
