@@ -10,19 +10,19 @@
             android:title="Statistics" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/stats_icon"
+            android:icon="@drawable/sss_icon"
             android:title="Social Service" />
-        <item
-            android:id="@+id/feedBackFormActivity2"
-            android:icon="@drawable/feedback_icon"
-            android:title="Feedback Form" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/awarness_icon"
             android:title="Awareness" />
         <item
+            android:id="@+id/feedBackFormActivity2"
+            android:icon="@drawable/feedback_icon"
+            android:title="Feedback Form" />
+        <item
             android:id="@+id/SocialService"
-            android:icon="@drawable/sss_icon"
+            android:icon="@drawable/feedback_icon"
             android:title="Social Service Form" />
     </group>
 </menu>

@@ -24,9 +24,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.login.ui.gallery.GalleryFragment;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -65,12 +65,11 @@ public class SocialServiceDescriptionActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment newFragment = new Fragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
                 // Replace whatever is in the fragment_container view with this fragment, and add the transaction to the back stack
-                transaction.replace(R.id.nav_gallery, newFragment);
-                transaction.addToBackStack(null);
+                transaction.replace(R.id.fragment, new GalleryFragment());
+                //transaction.addToBackStack(null);
 
                 // Commit the transaction
                 transaction.commit();
