@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/feedBackFormActivity2"
-        android:name="com.example.login.ui.feedbackform.HomeFragment"
+        android:name="com.example.login.ui.feedbackform.feedbackform"
         android:label="activity_feed_back_form"
         tools:layout="@layout/feedbackform" />
     <fragment
