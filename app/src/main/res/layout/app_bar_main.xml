@@ -19,12 +19,21 @@
             android:background="@drawable/gradient"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
+            <TextView
+                android:id="@+id/header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Statistics"
+                android:textColor="#000000"
+                android:textSize="30dp" />
+
             <Button
                 android:id="@+id/button3"
                 android:layout_width="wrap_content"
                 android:background="@drawable/buttonsxyz"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="220dp"
+                android:layout_marginStart="80dp"
                 android:text="@string/refresh"
                 android:visibility="invisible" />
         </androidx.appcompat.widget.Toolbar>
