@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment {
         Glide.with(getContext()).load(url1).diskCacheStrategy(DiskCacheStrategy.NONE ).skipMemoryCache(true).into(i2);
         Glide.with(getContext()).load(url3).diskCacheStrategy(DiskCacheStrategy.NONE ).skipMemoryCache(true).into(i4);
         Glide.with(getContext()).load(url5).diskCacheStrategy(DiskCacheStrategy.NONE ).skipMemoryCache(true).into(i5);
-        Glide.with(getContext()).load(url6).diskCacheStrategy(DiskCacheStrategy.NONE ).skipMemoryCache(true).into(i6);
+        //Glide.with(getContext()).load(url6).diskCacheStrategy(DiskCacheStrategy.NONE ).skipMemoryCache(true).into(i6);
         return root;
     }
 
