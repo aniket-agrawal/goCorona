@@ -1,5 +1,7 @@
 package com.example.login.ui.gallery;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.login.R;
+import com.example.login.SocialServiceDescriptionActivity;
 
 import java.util.ArrayList;
 
@@ -19,9 +22,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     private ArrayList<String> profilePhoneList;
     private ArrayList<String> dateandtimeList;
     private ArrayList<String> seatList;
+    Activity activity;
 
-    public ListAdapter(ArrayList<String> profileNameList, ArrayList<String> profileNumberList, ArrayList<String> seatList, ArrayList<String> dateandtimeList) {
+    public ListAdapter(Activity activity, ArrayList<String> profileNameList, ArrayList<String> profileNumberList, ArrayList<String> seatList, ArrayList<String> dateandtimeList) {
         this.profileNameList = profileNameList;
+        this.activity = activity;
         this.profilePhoneList = profileNumberList;
         this.seatList = seatList;
         this.dateandtimeList = dateandtimeList;
@@ -68,7 +73,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         }
 
         public void onClick(View view){
-
+            Intent intent = new Intent(activity, SocialServiceDescriptionActivity.class);
+            activity.startActivity(intent);
         }
 
     }
