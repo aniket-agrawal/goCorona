@@ -24,6 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
+                android:padding="5dp"
                 android:text="Statistics"
                 android:textColor="#000000"
                 android:textSize="30dp" />
@@ -33,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:background="@drawable/buttonsxyz"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="80dp"
+                android:layout_marginLeft="85dp"
                 android:text="@string/refresh"
                 android:visibility="invisible" />
         </androidx.appcompat.widget.Toolbar>
