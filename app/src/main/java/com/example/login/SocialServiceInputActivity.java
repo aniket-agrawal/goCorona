@@ -99,7 +99,7 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
     private final static int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private final static int GPS_REQUEST_CODE = 9003;
     private ResultReceiver resultReceiver;
-    private String name, imageUrl;
+    private String name;
 
 
     @Override
@@ -171,7 +171,6 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 name = dataSnapshot.child("users").child(phoneNum).child("Name").getValue().toString();
-                imageUrl = dataSnapshot.child("users").child(phoneNum).child("image").getValue().toString();
 
             }
 
@@ -543,7 +542,6 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
             SocialMap.put("Time of Service", serviceTime);
             SocialMap.put("Phone Number", phoneNum);
             SocialMap.put("User Name", name);
-            SocialMap.put("image", imageUrl);
 
 //            SocialMap.put("Date of Service", serviceDateString);
 //            SocialMap.put("Time of Service", serviceTimeString + " " + serviceTimeStringType);

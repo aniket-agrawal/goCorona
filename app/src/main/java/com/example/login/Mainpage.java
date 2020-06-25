@@ -17,13 +17,11 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.login.ui.gallery.GalleryFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -61,12 +59,6 @@ public class Mainpage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainpage);
         setTitle("");
-        Intent i = getIntent();
-        if(i.getIntExtra("dest", 0) == 1) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment, new GalleryFragment());
-            transaction.commit();
-        }
         mAuth=FirebaseAuth.getInstance();
         phone=mAuth.getCurrentUser().getPhoneNumber();
         phone=phone.substring(3);
@@ -210,9 +202,10 @@ public class Mainpage extends AppCompatActivity {
 
                     String retrieveProfileImage= dataSnapshot.child("image").getValue().toString();
 
-
-                    Picasso.get().load(retrieveProfileImage).into(userProfileImage);
-
+                    System.out.println(retrieveProfileImage);
+                    if(!retrieveProfileImage.equals("")) {
+                        Picasso.get().load(retrieveProfileImage).into(userProfileImage);
+                    }
 
                 }
 

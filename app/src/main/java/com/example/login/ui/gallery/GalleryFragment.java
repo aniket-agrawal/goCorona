@@ -44,6 +44,7 @@ public class GalleryFragment extends Fragment {
     private ArrayList<String> profileNameList= new ArrayList<>();
     private ArrayList<String> seatList= new ArrayList<>();
     private ArrayList<String> dateandtimeList= new ArrayList<>();
+    private ArrayList<String> imageList= new ArrayList<>();
     private ArrayList<Double> distanceList= new ArrayList<>();
     private ArrayList<String> profileNumberList= new ArrayList<>();
     private ArrayList<String> idList= new ArrayList<>();
@@ -53,6 +54,7 @@ public class GalleryFragment extends Fragment {
     private double finalLatitude=0, finalLongitude=0;
     SimpleDateFormat curentDateFormat,currentTimeFormat;
     Calendar calForDate,calForTime;
+    String image;
     Activity activity;
     private final static int REQUEST_CODE_LOCATION_PERMISSION = 1;
 
@@ -69,6 +71,7 @@ public class GalleryFragment extends Fragment {
                     dateandtimeList.clear();
                     idList.clear();
                     distanceList.clear();
+                    imageList.clear();
                     Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
                     Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
 
@@ -91,7 +94,6 @@ public class GalleryFragment extends Fragment {
                                 double clat = dataSnapshot1.child("latitude").getValue(double.class);
                                 double clang = dataSnapshot1.child("longitude").getValue(double.class);
                                 double  distance = distcheck(finalLatitude,clat,finalLongitude,clang);
-                                System.out.println(String.valueOf(distance)+" K.M.");
                                 calForDate = Calendar.getInstance();
                                 curentDateFormat = new SimpleDateFormat("dd/MM/yyyy") ;
                                 currentDate=curentDateFormat.format(calForDate.getTime());
@@ -106,7 +108,20 @@ public class GalleryFragment extends Fragment {
                                         dateandtimeList.add(time + ", " + date);
                                         profileNameList.add(name);
                                         profileNumberList.add(phone);
-                                        initReceivedRecyclerView();
+                                        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference().child("users").child(phone);
+                                        reference1.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                                                image = dataSnapshot2.child("image").getValue().toString();
+                                                imageList.add(image);
+                                                initReceivedRecyclerView();
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
                                     }
                                 }
 
@@ -132,7 +147,7 @@ public class GalleryFragment extends Fragment {
     private void initReceivedRecyclerView() {
         RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
         activity = getActivity();
-        ListAdapter listAdapter = new ListAdapter(activity, profileNameList, profileNumberList,seatList,dateandtimeList, idList, distanceList);
+        ListAdapter listAdapter = new ListAdapter(activity, profileNameList, profileNumberList,seatList,dateandtimeList, idList, distanceList, imageList);
         recyclerView.setAdapter(listAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
