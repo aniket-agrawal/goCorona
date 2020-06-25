@@ -25,9 +25,10 @@
     <string name="person_in_contact"><u>Person in contact</u></string>
     <string name="maximum_seats"><u>Maximum seats</u></string>
     <string name="date_and_time"><u>Date and time</u></string>
-    <string name="contact_number"><u>contact Number</u></string>
+    <string name="contact_number"><u>Contact Number</u></string>
     <string name="description"><u>Description</u></string>
     <string name="location"><u>Location</u></string>
+    <string name="approx_distance"><u>Approx. Distance</u></string>
 
     <string-array name="typeoffeedback">
 

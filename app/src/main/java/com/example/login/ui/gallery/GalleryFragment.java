@@ -43,8 +43,7 @@ public class GalleryFragment extends Fragment {
     private ArrayList<String> profileNameList= new ArrayList<>();
     private ArrayList<String> seatList= new ArrayList<>();
     private ArrayList<String> dateandtimeList= new ArrayList<>();
-    private ArrayList<Double> latList= new ArrayList<>();
-    private ArrayList<Double> langList= new ArrayList<>();
+    private ArrayList<Double> distanceList= new ArrayList<>();
     private ArrayList<String> profileNumberList= new ArrayList<>();
     private ArrayList<String> idList= new ArrayList<>();
 
@@ -68,6 +67,7 @@ public class GalleryFragment extends Fragment {
                     seatList.clear();
                     dateandtimeList.clear();
                     idList.clear();
+                    distanceList.clear();
                     Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
                     Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
 
@@ -87,6 +87,9 @@ public class GalleryFragment extends Fragment {
                                     time = '0' + time;
                                 }
                                 String seat = dataSnapshot1.child("Number of People valid").getValue().toString();
+                                double clat = dataSnapshot1.child("latitude").getValue(double.class);
+                                double clang = dataSnapshot1.child("longitude").getValue(double.class);
+                                double  distance = distcheck(finalLatitude,clat,finalLongitude,clang);
                                 calForDate = Calendar.getInstance();
                                 curentDateFormat = new SimpleDateFormat("dd/MM/yyyy") ;
                                 currentDate=curentDateFormat.format(calForDate.getTime());
@@ -95,12 +98,15 @@ public class GalleryFragment extends Fragment {
                                 currentTime=currentTimeFormat.format(calForTime.getTime());
                                 //System.out.println(currentTime);
                                 if(check(date,currentDate,time,currentTime)) {
-                                    idList.add(id);
-                                    seatList.add(seat);
-                                    dateandtimeList.add(time + ", " + date);
-                                    profileNameList.add(name);
-                                    profileNumberList.add(phone);
-                                    initReceivedRecyclerView();
+                                    if(distance<=10) {
+                                        distanceList.add(distance);
+                                        idList.add(id);
+                                        seatList.add(seat);
+                                        dateandtimeList.add(time + ", " + date);
+                                        profileNameList.add(name);
+                                        profileNumberList.add(phone);
+                                        initReceivedRecyclerView();
+                                    }
                                 }
 
                             }
@@ -229,16 +235,21 @@ public class GalleryFragment extends Fragment {
         int month = Integer.parseInt(date.substring(3,5)), cmonth = Integer.parseInt(cdate.substring(3,5));
         if(cmonth>month) return false;
         if(month>cmonth) return true;
-        int d = Integer.parseInt(date.substring(0,2)), cd = Integer.parseInt(date.substring(0,2));
+        int d = Integer.parseInt(date.substring(0,2)), cd = Integer.parseInt(cdate.substring(0,2));
         if(cd>d) return false;
         if(d>cd) return true;
         if((ctime.charAt(6)=='P' || ctime.charAt(6)=='p') && (time.charAt(6)=='A' || time.charAt(6)=='a')) return false;
-        if((time.charAt(6)=='P' || time.charAt(6)=='p') && (ctime.charAt(6)=='A' || ctime.charAt(6)=='a')) return false;
-        int hour = Integer.parseInt(time.substring(0,2)), chour = Integer.parseInt(time.substring(0,2));
+        if((time.charAt(6)=='P' || time.charAt(6)=='p') && (ctime.charAt(6)=='A' || ctime.charAt(6)=='a')) return true;
+        int hour = Integer.parseInt(time.substring(0,2)), chour = Integer.parseInt(ctime.substring(0,2));
         if(chour>hour) return false;
         if(hour>chour) return true;
-        int min = Integer.parseInt(time.substring(3,5)), cmin = Integer.parseInt(time.substring(3,5));
+        int min = Integer.parseInt(time.substring(3,5)), cmin = Integer.parseInt(ctime.substring(3,5));
         return cmin <= min;
     }
+
+    public double distcheck(double clat,double slat, double clang, double slang){
+        return 0;
+    }
+
 
 }
