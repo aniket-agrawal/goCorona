@@ -34,6 +34,7 @@ public class GalleryFragment extends Fragment {
     private ArrayList<String> seatList= new ArrayList<>();
     private ArrayList<String> dateandtimeList= new ArrayList<>();
     private ArrayList<String> profileNumberList= new ArrayList<>();
+    private ArrayList<String> idList= new ArrayList<>();
     private DatabaseReference reff;
     private String currentDate, currentTime;
     SimpleDateFormat curentDateFormat,currentTimeFormat;
@@ -51,6 +52,7 @@ public class GalleryFragment extends Fragment {
                     profileNumberList.clear();
                     seatList.clear();
                     dateandtimeList.clear();
+                    idList.clear();
                     Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
                     Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
 
@@ -61,12 +63,15 @@ public class GalleryFragment extends Fragment {
                         reff.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                                String id = dataSnapshot1.getKey();
                                 String name = dataSnapshot1.child("User Name").getValue().toString();
                                 String phone = dataSnapshot1.child("Phone Number").getValue().toString();
                                 String date = dataSnapshot1.child("Date of Service").getValue().toString();
                                 date= date.substring(0,6) + "20" + date.substring(6);
                                 String time = dataSnapshot1.child("Time of Service").getValue().toString();
-                                time="05:30 P.M";
+                                if(time.charAt(1)==':'){
+                                    time = '0' + time;
+                                }
                                 String seat = dataSnapshot1.child("Number of People valid").getValue().toString();
                                 calForDate = Calendar.getInstance();
                                 curentDateFormat = new SimpleDateFormat("dd/MM/yyyy") ;
@@ -74,7 +79,9 @@ public class GalleryFragment extends Fragment {
                                 calForTime = Calendar.getInstance();
                                 currentTimeFormat = new SimpleDateFormat("hh:mm a") ;
                                 currentTime=currentTimeFormat.format(calForTime.getTime());
+                                //System.out.println(currentTime);
                                 if(check(date,currentDate,time,currentTime)) {
+                                    idList.add(id);
                                     seatList.add(seat);
                                     dateandtimeList.add(time + ", " + date);
                                     profileNameList.add(name);
@@ -104,7 +111,7 @@ public class GalleryFragment extends Fragment {
     private void initReceivedRecyclerView() {
         RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
         activity = getActivity();
-        ListAdapter listAdapter = new ListAdapter(activity, profileNameList, profileNumberList,seatList,dateandtimeList);
+        ListAdapter listAdapter = new ListAdapter(activity, profileNameList, profileNumberList,seatList,dateandtimeList, idList);
         recyclerView.setAdapter(listAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -135,8 +142,8 @@ public class GalleryFragment extends Fragment {
         int d = Integer.parseInt(date.substring(0,2)), cd = Integer.parseInt(date.substring(0,2));
         if(cd>d) return false;
         if(d>cd) return true;
-        if(ctime.charAt(6)=='P' && time.charAt(6)!='P') return false;
-        if(time.charAt(6)=='P' && ctime.charAt(6)!='P') return true;
+        if((ctime.charAt(6)=='P' || ctime.charAt(6)=='p') && (time.charAt(6)=='A' || time.charAt(6)=='a')) return false;
+        if((time.charAt(6)=='P' || time.charAt(6)=='p') && (ctime.charAt(6)=='A' || ctime.charAt(6)=='a')) return false;
         int hour = Integer.parseInt(time.substring(0,2)), chour = Integer.parseInt(time.substring(0,2));
         if(chour>hour) return false;
         if(hour>chour) return true;

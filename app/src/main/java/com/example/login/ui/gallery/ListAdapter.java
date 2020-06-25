@@ -22,10 +22,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     private ArrayList<String> profilePhoneList;
     private ArrayList<String> dateandtimeList;
     private ArrayList<String> seatList;
+    private ArrayList<String> idList;
     Activity activity;
 
-    public ListAdapter(Activity activity, ArrayList<String> profileNameList, ArrayList<String> profileNumberList, ArrayList<String> seatList, ArrayList<String> dateandtimeList) {
+    public ListAdapter(Activity activity, ArrayList<String> profileNameList, ArrayList<String> profileNumberList, ArrayList<String> seatList, ArrayList<String> dateandtimeList, ArrayList<String> idList) {
         this.profileNameList = profileNameList;
+        this.idList = idList;
         this.activity = activity;
         this.profilePhoneList = profileNumberList;
         this.seatList = seatList;
@@ -52,7 +54,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
     public class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        private TextView number,name,date,seat;
+        private TextView number,name,date,seat,id;
         private CircleImageView photo;
 
         public ListViewHolder(View view){
@@ -62,6 +64,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             number = (TextView)view.findViewById(R.id.phonenumber);
             date = (TextView)view.findViewById(R.id.dateandtime);
             seat = (TextView)view.findViewById(R.id.seat);
+            id = (TextView)view.findViewById(R.id.id);
             itemView.setOnClickListener(this);
         }
 
@@ -70,11 +73,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             number.setText(profilePhoneList.get(position));
             date.setText(dateandtimeList.get(position));
             seat.setText(seatList.get(position));
+            id.setText(idList.get(position));
         }
 
         public void onClick(View view){
             Intent intent = new Intent(activity, SocialServiceDescriptionActivity.class);
+            intent.putExtra("id",id.getText());
             activity.startActivity(intent);
+            activity.finish();
         }
 
     }
