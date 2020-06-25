@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,8 +66,17 @@ public class SocialServiceDescriptionActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SocialServiceDescriptionActivity.this,Mainpage.class));
-                finish();
+                Fragment newFragment = new Fragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment, and add the transaction to the back stack
+                transaction.replace(R.id.nav_gallery, newFragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+                //startActivity(new Intent(SocialServiceDescriptionActivity.this,Mainpage.class));
+                //finish();
             }
         });
 
