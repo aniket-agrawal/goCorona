@@ -244,7 +244,7 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
 
                 if(position==5)
                 {
-                    typeOfSocial = "Custom" ;
+                    typeOfSocial = "Providing Custom Service" ;
                 }
 
 

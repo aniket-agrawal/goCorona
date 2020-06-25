@@ -39,9 +39,9 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SocialServiceDescriptionActivity extends AppCompatActivity {
 
-    private TextView nameOfProvider, typeOfService, dateOfService, timeOfService, descriptionOfService,addressOfService;
+    private TextView nameOfProvider, typeOfService, dateOfService, timeOfService, descriptionOfService,addressOfService,phone_number,seat_available;
     double lat,lang;
-    String id,name,phone,date,time,seat,description,address,currentUserAddress="";
+    String id,name,phone,date,time,seat,description,type,address,currentUserAddress="";
     DatabaseReference reference;
 
     private ImageButton backButton, navigationButton;
@@ -79,18 +79,18 @@ public class SocialServiceDescriptionActivity extends AppCompatActivity {
             }
         });
 
-//        nameOfProvider = findViewById(R.id.provider_name);
-//        typeOfService = findViewById(R.id.type_service);
-//        dateOfService = findViewById(R.id.date_service);
-//        timeOfService = findViewById(R.id.time_service);
-//        descriptionOfService = findViewById(R.id.description_service);
-//        addressOfService = findViewById(R.id.address_service);
+        nameOfProvider = findViewById(R.id.provider_name);
+        typeOfService = findViewById(R.id.type_service);
+        dateOfService = findViewById(R.id.date_service);
+        seat_available = findViewById(R.id.seats_available);
+        timeOfService = findViewById(R.id.time_service);
+        phone_number = findViewById(R.id.contact_number);
+        descriptionOfService = findViewById(R.id.description_service);
+        addressOfService = findViewById(R.id.address_service);
         navigationButton = findViewById(R.id.navigation_button);
         navigationButton.setVisibility(View.GONE);
 
-        if(isGPSEnabled()){
-            Toast.makeText(SocialServiceDescriptionActivity.this, "You are good to go!", Toast.LENGTH_SHORT).show();
-        }
+        boolean b = isGPSEnabled();
         if (ContextCompat.checkSelfPermission(
                 getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION
         ) != PackageManager.PERMISSION_GRANTED) {
@@ -116,10 +116,9 @@ public class SocialServiceDescriptionActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 name = dataSnapshot.child("User Name").getValue().toString();
-                System.out.println(name);
                 phone = dataSnapshot.child("Phone Number").getValue().toString();
+                type = dataSnapshot.child("Social category").getValue().toString();
                 date = dataSnapshot.child("Date of Service").getValue().toString();
-                date= date.substring(0,6) + "20" + date.substring(6);
                 time = dataSnapshot.child("Time of Service").getValue().toString();
                 lat = dataSnapshot.child("latitude").getValue(double.class);
                 lang = dataSnapshot.child("longitude").getValue(double.class);
@@ -129,11 +128,14 @@ public class SocialServiceDescriptionActivity extends AppCompatActivity {
                 seat = dataSnapshot.child("Number of People valid").getValue().toString();
                 description = dataSnapshot.child("user description").getValue().toString();
                 address = dataSnapshot.child("user_address").getValue().toString();
-//                nameOfProvider.setText(name);
-//                dateOfService.setText(date);
-//                timeOfService.setText(time);
-//                descriptionOfService.setText(description);
-//                addressOfService.setText(address);
+                nameOfProvider.setText("Name of Provider - " + name);
+                dateOfService.setText("Date - " + date);
+                timeOfService.setText("Time - " + time);
+                typeOfService.setText(type);
+                descriptionOfService.setText(description);
+                addressOfService.setText(address);
+                phone_number.setText("Contact Number of Provider - " + phone);
+                seat_available.setText("Maximum seats - " + seat);
 
             }
 
@@ -265,11 +267,10 @@ public class SocialServiceDescriptionActivity extends AppCompatActivity {
             if(resultCode == Constants.SUCCESS_RESULT)
             {
                 currentUserAddress = (resultData.getString(Constants.RESULT_DATA_KEY));
-                Toast.makeText(SocialServiceDescriptionActivity.this, currentUserAddress, Toast.LENGTH_SHORT).show();
                 navigationButton.setVisibility(View.VISIBLE);
             }
             else{
-                Toast.makeText(SocialServiceDescriptionActivity.this, resultData.getString(Constants.RESULT_DATA_KEY), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SocialServiceDescriptionActivity.this, "Error, please try again", Toast.LENGTH_SHORT).show();
             }
 
 
