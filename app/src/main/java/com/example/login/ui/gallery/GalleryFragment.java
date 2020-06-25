@@ -44,6 +44,7 @@ public class GalleryFragment extends Fragment {
     private ArrayList<String> profileNameList= new ArrayList<>();
     private ArrayList<String> seatList= new ArrayList<>();
     private ArrayList<String> dateandtimeList= new ArrayList<>();
+    private ArrayList<String> imageList= new ArrayList<>();
     private ArrayList<Double> distanceList= new ArrayList<>();
     private ArrayList<String> profileNumberList= new ArrayList<>();
     private ArrayList<String> idList= new ArrayList<>();
@@ -69,6 +70,7 @@ public class GalleryFragment extends Fragment {
                     dateandtimeList.clear();
                     idList.clear();
                     distanceList.clear();
+                    imageList.clear();
                     Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
                     Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
 
@@ -83,6 +85,7 @@ public class GalleryFragment extends Fragment {
                                 String name = dataSnapshot1.child("User Name").getValue().toString();
                                 String phone = dataSnapshot1.child("Phone Number").getValue().toString();
                                 String date = dataSnapshot1.child("Date of Service").getValue().toString();
+                                String image = dataSnapshot1.child("image").getValue().toString();
                                 String time = dataSnapshot1.child("Time of Service").getValue().toString();
                                 if(time.charAt(1)==':'){
                                     time = '0' + time;
@@ -106,6 +109,7 @@ public class GalleryFragment extends Fragment {
                                         dateandtimeList.add(time + ", " + date);
                                         profileNameList.add(name);
                                         profileNumberList.add(phone);
+                                        imageList.add(image);
                                         initReceivedRecyclerView();
                                     }
                                 }
@@ -132,7 +136,7 @@ public class GalleryFragment extends Fragment {
     private void initReceivedRecyclerView() {
         RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
         activity = getActivity();
-        ListAdapter listAdapter = new ListAdapter(activity, profileNameList, profileNumberList,seatList,dateandtimeList, idList, distanceList);
+        ListAdapter listAdapter = new ListAdapter(activity, profileNameList, profileNumberList,seatList,dateandtimeList, idList, distanceList, imageList);
         recyclerView.setAdapter(listAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);

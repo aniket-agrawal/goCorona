@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.login.R;
 import com.example.login.SocialServiceDescriptionActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -24,13 +25,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     private ArrayList<Double> distanceList;
     private ArrayList<String> seatList;
     private ArrayList<String> idList;
+    private ArrayList<String> imagesList;
     Activity activity;
 
-    public ListAdapter(Activity activity, ArrayList<String> profileNameList, ArrayList<String> profileNumberList, ArrayList<String> seatList, ArrayList<String> dateandtimeList, ArrayList<String> idList, ArrayList<Double> distanceList) {
+    public ListAdapter(Activity activity, ArrayList<String> profileNameList, ArrayList<String> profileNumberList, ArrayList<String> seatList, ArrayList<String> dateandtimeList, ArrayList<String> idList, ArrayList<Double> distanceList, ArrayList<String> imageList) {
         this.profileNameList = profileNameList;
         this.idList = idList;
         this.distanceList = distanceList;
         this.activity = activity;
+        this.imagesList = imageList;
         this.profilePhoneList = profileNumberList;
         this.seatList = seatList;
         this.dateandtimeList = dateandtimeList;
@@ -84,6 +87,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             else{
                 distance.setText(String.valueOf(dist/1000.0) + " K.M.");
             }
+            Picasso.get().load(imagesList.get(position)).placeholder(R.drawable.profile_image).into(photo);
         }
 
         public void onClick(View view){
