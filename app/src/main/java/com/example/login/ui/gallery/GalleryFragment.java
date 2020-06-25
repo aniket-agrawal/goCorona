@@ -1,18 +1,30 @@
 package com.example.login.ui.gallery;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.login.FeedBackFormActivity;
 import com.example.login.R;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,9 +49,11 @@ public class GalleryFragment extends Fragment {
     private ArrayList<String> idList= new ArrayList<>();
     private DatabaseReference reff;
     private String currentDate, currentTime;
+    private double finalLatitude=0, finalLongitude=0;
     SimpleDateFormat curentDateFormat,currentTimeFormat;
     Calendar calForDate,calForTime;
     Activity activity;
+    private final static int REQUEST_CODE_LOCATION_PERMISSION = 1;
 
     private void readUsers() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Social Service");
@@ -122,6 +136,17 @@ public class GalleryFragment extends Fragment {
         b = (Button)getActivity().findViewById(R.id.button3);
         b.setVisibility(View.VISIBLE);
         fragment = this;
+
+        if (ContextCompat.checkSelfPermission(
+                getContext(), Manifest.permission.ACCESS_FINE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_LOCATION_PERMISSION);
+        } else {
+            getCurrentLocation();
+        }
+
+
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,6 +156,77 @@ public class GalleryFragment extends Fragment {
         readUsers();
         return root;
     }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getCurrentLocation();
+//                getMap();
+            } else {
+                Toast.makeText(getContext(), "Permission Not Granted", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+    private void getCurrentLocation() {
+
+        LocationRequest locationRequest = new LocationRequest();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(3000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        LocationServices.getFusedLocationProviderClient(getActivity())
+                .requestLocationUpdates(locationRequest, new LocationCallback() {
+
+
+                    @Override
+                    public void onLocationResult(LocationResult locationResult) {
+                        super.onLocationResult(locationResult);
+                        LocationServices.getFusedLocationProviderClient(getActivity())
+                                .removeLocationUpdates(this);
+                        if (locationResult != null && locationResult.getLocations().size() > 0) {
+                            int latestlocationIndex = locationResult.getLocations().size() - 1;
+                            double latitude =
+                                    locationResult.getLocations().get(latestlocationIndex).getLatitude();
+
+                            double longitude =
+                                    locationResult.getLocations().get(latestlocationIndex).getLongitude();
+
+                            finalLatitude = latitude;
+                            finalLongitude = longitude;
+
+                            Toast.makeText(activity, finalLatitude + "      " + finalLongitude, Toast.LENGTH_SHORT).show();
+
+                            Location location = new Location("providerNA");
+                            location.setLatitude(latitude);
+                            location.setLongitude(longitude);
+
+
+                        }
+
+
+
+                    }
+                }, Looper.getMainLooper());
+
+    }
+
+
 
     public boolean check(String date, String cdate, String time, String ctime){
         int year = Integer.parseInt(date.substring(6)), cyear = Integer.parseInt(cdate.substring(6));
