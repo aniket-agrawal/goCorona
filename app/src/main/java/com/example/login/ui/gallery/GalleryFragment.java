@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.login.FeedBackFormActivity;
 import com.example.login.R;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -81,7 +80,6 @@ public class GalleryFragment extends Fragment {
                                 String name = dataSnapshot1.child("User Name").getValue().toString();
                                 String phone = dataSnapshot1.child("Phone Number").getValue().toString();
                                 String date = dataSnapshot1.child("Date of Service").getValue().toString();
-                                date= date.substring(0,6) + "20" + date.substring(6);
                                 String time = dataSnapshot1.child("Time of Service").getValue().toString();
                                 if(time.charAt(1)==':'){
                                     time = '0' + time;

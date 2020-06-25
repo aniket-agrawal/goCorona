@@ -49,7 +49,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -528,6 +527,9 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
             SocialMap.put("longitude", firebaseLng);
             SocialMap.put("user_address", firebaseAddress);
             SocialMap.put("Number of People valid", NumberOfPeopleFirebase);
+            if(serviceDate.length()==8) {
+                serviceDate= serviceDate.substring(0,6) + "20" + serviceDate.substring(6);
+            }
             SocialMap.put("Date of Service", serviceDate);
             SocialMap.put("Time of Service", serviceTime);
             SocialMap.put("Phone Number", phoneNum);

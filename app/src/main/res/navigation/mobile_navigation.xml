@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.example.login.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="Statistics"
         tools:layout="@layout/fragment_home" />
 
     <fragment
@@ -28,11 +28,9 @@
         android:name="com.example.login.FeedBackFormActivity"
         android:label="activity_feed_back_form"
         tools:layout="@layout/activity_feed_back_form" />
-
-
     <activity
-    android:id="@+id/SocialService"
-    android:name="com.example.login.SocialServiceInputActivity"
-    android:label="activity_feed_back_form"
-    tools:layout="@layout/activity_social_service_input" />
+        android:id="@+id/SocialService"
+        android:name="com.example.login.SocialServiceInputActivity"
+        android:label="activity_feed_back_form"
+        tools:layout="@layout/activity_social_service_input" />
 </navigation>
