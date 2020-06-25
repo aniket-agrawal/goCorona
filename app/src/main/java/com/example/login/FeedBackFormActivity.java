@@ -322,8 +322,7 @@ public class FeedBackFormActivity extends AppCompatActivity {
 
     public void submitFeedback(View view)
     {
-        submitButton.setVisibility(View.INVISIBLE);
-        progressBarSubmit.setVisibility(View.VISIBLE);
+
         UpdateSettings();
     }
 
@@ -345,6 +344,8 @@ public class FeedBackFormActivity extends AppCompatActivity {
         else
             {
 
+                submitButton.setVisibility(View.INVISIBLE);
+                progressBarSubmit.setVisibility(View.VISIBLE);
                 Calendar calForDate = Calendar.getInstance();
                 SimpleDateFormat curentDateFormat = new SimpleDateFormat("MMM dd,  yyyy") ;
                 currentDate=curentDateFormat.format(calForDate.getTime());
