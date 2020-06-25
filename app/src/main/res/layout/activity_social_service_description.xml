@@ -7,7 +7,13 @@
     tools:context=".SocialServiceDescriptionActivity"
     android:background="#EBF3E8">
 
-
+<FrameLayout
+    android:id="@+id/fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <TextView
         android:id="@+id/textView9"
         android:layout_width="match_parent"
@@ -167,7 +173,9 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/navigation"/>
 
+    </RelativeLayout>
 
+</FrameLayout>
 
 
 </RelativeLayout>
