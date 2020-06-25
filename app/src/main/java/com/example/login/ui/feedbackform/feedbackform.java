@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.example.login.FeedBackFormActivity;
 import com.example.login.R;
 
-public class HomeFragment extends Fragment {
+public class feedbackform extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
