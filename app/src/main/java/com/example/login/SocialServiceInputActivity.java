@@ -99,7 +99,7 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
     private final static int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private final static int GPS_REQUEST_CODE = 9003;
     private ResultReceiver resultReceiver;
-    private String name;
+    private String name, imageUrl;
 
 
     @Override
@@ -167,10 +167,11 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
 
         RootRef = FirebaseDatabase.getInstance().getReference();
 
-        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        RootRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 name = dataSnapshot.child("users").child(phoneNum).child("Name").getValue().toString();
+                imageUrl = dataSnapshot.child("users").child(phoneNum).child("image").getValue().toString();
 
             }
 
@@ -470,8 +471,7 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
 
     public void submitSocial(View view)
     {
-        submitButton.setVisibility(View.INVISIBLE);
-        progressBarSubmit.setVisibility(View.VISIBLE);
+
         UpdateSettings();
 
     }
@@ -507,6 +507,8 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
         else
         {
 
+            submitButton.setVisibility(View.INVISIBLE);
+            progressBarSubmit.setVisibility(View.VISIBLE);
             Calendar calForDate = Calendar.getInstance();
             SimpleDateFormat curentDateFormat = new SimpleDateFormat("MMM dd,  yyyy") ;
             currentDate=curentDateFormat.format(calForDate.getTime());
@@ -541,6 +543,7 @@ public class SocialServiceInputActivity extends AppCompatActivity implements Dat
             SocialMap.put("Time of Service", serviceTime);
             SocialMap.put("Phone Number", phoneNum);
             SocialMap.put("User Name", name);
+            SocialMap.put("image", imageUrl);
 
 //            SocialMap.put("Date of Service", serviceDateString);
 //            SocialMap.put("Time of Service", serviceTimeString + " " + serviceTimeStringType);
