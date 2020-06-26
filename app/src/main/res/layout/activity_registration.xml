@@ -50,22 +50,23 @@
 
     <Spinner
         android:id="@+id/Gender"
-        android:layout_width="228dp"
-        android:layout_height="58dp"
+        android:layout_width="160dp"
+        android:layout_height="64dp"
         android:layout_centerInParent="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintHorizontal_bias="0.063"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.531" />
+        app:layout_constraintVertical_bias="0.527" />
 
     <EditText
         android:id="@+id/editTextTextPersonName"
-        android:layout_width="297dp"
+        android:layout_width="wrap_content"
         android:layout_height="65dp"
         android:ems="10"
         android:hint="Name"
+        android:textSize="25dp"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,10 +77,11 @@
 
     <EditText
         android:id="@+id/editTextTextPersonAge"
-        android:layout_width="297dp"
+        android:layout_width="wrap_content"
         android:layout_height="65dp"
         android:ems="10"
         android:hint="Age"
+        android:textSize="25dp"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -93,7 +95,8 @@
         android:layout_width="297dp"
         android:layout_height="64dp"
         android:text="9999999999"
-        android:textSize="40dp"
+        android:textSize="35dp"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.14"
