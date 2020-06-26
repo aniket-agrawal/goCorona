@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class Registration extends AppCompatActivity {
     private DatabaseReference rootref;
     private FirebaseAuth mAuth;
     private String currentUserId;
+    private ProgressBar progressBar;
 
     private int b=1;
 
@@ -46,6 +48,7 @@ public class Registration extends AppCompatActivity {
         phone = i.getStringExtra("mkey");
         t=(TextView)findViewById(R.id.textView8);
         t.setText(phone);
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
         spinner = (Spinner) findViewById(R.id.Gender);
         n=(EditText)findViewById(R.id.editTextTextPersonName);
         a=(EditText)findViewById(R.id.editTextTextPersonAge);
@@ -125,7 +128,9 @@ public class Registration extends AppCompatActivity {
         finish();
     }
 
-    public void register(View view) {
+    public void register(final View view) {
+        progressBar.setVisibility(View.VISIBLE);
+        view.setEnabled(false);
         collectdata();
         if (check()) {
             rootref=FirebaseDatabase.getInstance().getReference();
@@ -146,6 +151,8 @@ public class Registration extends AppCompatActivity {
                         finish();
                     }
                     else{
+                        view.setEnabled(true);
+                        progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(Registration.this,"Error: Please Retry",Toast.LENGTH_LONG).show();
                     }
                 }
