@@ -87,6 +87,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             else{
                 distance.setText(String.valueOf(dist/1000.0) + " K.M.");
             }
+            System.out.println(profileNameList.get(position));
+            System.out.println(imagesList.get(position));
             if(!imagesList.get(position).equals("")) {
                 Picasso.get().load(imagesList.get(position)).into(photo);
             }

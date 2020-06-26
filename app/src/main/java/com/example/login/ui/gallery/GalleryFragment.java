@@ -114,6 +114,7 @@ public class GalleryFragment extends Fragment {
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
                                                 image = dataSnapshot2.child("image").getValue().toString();
                                                 imageList.add(image);
+                                                System.out.println(image);
                                                 initReceivedRecyclerView();
                                             }
 
