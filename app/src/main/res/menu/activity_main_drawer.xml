@@ -24,5 +24,9 @@
             android:id="@+id/SocialService"
             android:icon="@drawable/feedback_icon"
             android:title="Social Service Form" />
+        <item
+            android:id="@+id/feedbackforus"
+            android:icon="@drawable/rating_icon"
+            android:title="Rating for App" />
     </group>
 </menu>
