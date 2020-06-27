@@ -92,6 +92,9 @@ public class GalleryFragment extends Fragment {
                                 if(time.charAt(1)==':'){
                                     time = '0' + time;
                                 }
+                                if(time.length() == 9){
+                                    time = time.substring(0,3) + '0' + time.substring(3);
+                                }
                                 String seat = dataSnapshot1.child("Number of People valid").getValue().toString();
                                 double clat = dataSnapshot1.child("latitude").getValue(double.class);
                                 double clang = dataSnapshot1.child("longitude").getValue(double.class);
@@ -280,8 +283,14 @@ public class GalleryFragment extends Fragment {
         if((ctime.charAt(6)=='P' || ctime.charAt(6)=='p') && (time.charAt(6)=='A' || time.charAt(6)=='a')) return false;
         if((time.charAt(6)=='P' || time.charAt(6)=='p') && (ctime.charAt(6)=='A' || ctime.charAt(6)=='a')) return true;
         int hour = Integer.parseInt(time.substring(0,2)), chour = Integer.parseInt(ctime.substring(0,2));
-        if(chour>hour) return false;
-        if(hour>chour) return true;
+        if(chour>hour){
+            if(chour == 12) return true;
+            return false;
+        }
+        if(hour>chour){
+            if(hour == 12) return false;
+            return true;
+        }
         int min = Integer.parseInt(time.substring(3,5)), cmin = Integer.parseInt(ctime.substring(3,5));
         return cmin <= min;
     }
