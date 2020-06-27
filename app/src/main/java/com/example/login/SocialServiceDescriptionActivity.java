@@ -115,6 +115,9 @@ public class SocialServiceDescriptionActivity extends AppCompatActivity {
                 if(time.charAt(1)==':'){
                     time = '0' + time;
                 }
+                if(time.length() == 9){
+                    time = time.substring(0,3) + '0' + time.substring(3);
+                }
                 seat = dataSnapshot.child("Number of People valid").getValue().toString();
                 description = dataSnapshot.child("user description").getValue().toString();
                 address = dataSnapshot.child("user_address").getValue().toString();

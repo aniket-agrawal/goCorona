@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +57,7 @@ public class GalleryFragment extends Fragment {
     Calendar calForDate,calForTime;
     String image;
     Activity activity;
+    public boolean check = false,isCheck = false;
     private final static int REQUEST_CODE_LOCATION_PERMISSION = 1;
 
     private void readUsers() {
@@ -90,6 +92,9 @@ public class GalleryFragment extends Fragment {
                                 if(time.charAt(1)==':'){
                                     time = '0' + time;
                                 }
+                                if(time.length() == 9){
+                                    time = time.substring(0,3) + '0' + time.substring(3);
+                                }
                                 String seat = dataSnapshot1.child("Number of People valid").getValue().toString();
                                 double clat = dataSnapshot1.child("latitude").getValue(double.class);
                                 double clang = dataSnapshot1.child("longitude").getValue(double.class);
@@ -100,7 +105,7 @@ public class GalleryFragment extends Fragment {
                                 calForTime = Calendar.getInstance();
                                 currentTimeFormat = new SimpleDateFormat("hh:mm a") ;
                                 currentTime=currentTimeFormat.format(calForTime.getTime());
-                                if(check(date,currentDate,time,currentTime)) {
+                                if(checkdt(date,currentDate,time,currentTime)) {
                                     if(distance<=10) {
                                         distanceList.add(distance);
                                         idList.add(id);
@@ -115,6 +120,7 @@ public class GalleryFragment extends Fragment {
                                                 image = dataSnapshot2.child("image").getValue().toString();
                                                 imageList.add(image);
                                                 System.out.println(image);
+                                                isCheck = true;
                                                 initReceivedRecyclerView();
                                             }
 
@@ -146,18 +152,27 @@ public class GalleryFragment extends Fragment {
     }
 
     private void initReceivedRecyclerView() {
-        RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
-        activity = getActivity();
-        ListAdapter listAdapter = new ListAdapter(activity, profileNameList, profileNumberList,seatList,dateandtimeList, idList, distanceList, imageList);
-        recyclerView.setAdapter(listAdapter);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        if(check) {
+            System.out.println(getView());
+            RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
+            activity = getActivity();
+            ListAdapter listAdapter = new ListAdapter(activity, profileNameList, profileNumberList, seatList, dateandtimeList, idList, distanceList, imageList);
+            recyclerView.setAdapter(listAdapter);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+            recyclerView.setLayoutManager(layoutManager);
+            isCheck = false;
+        }
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
         b = (Button)getActivity().findViewById(R.id.button3);
         b.setVisibility(View.VISIBLE);
+        b.setEnabled(false);
+        check = true;
+        if(isCheck) {
+            initReceivedRecyclerView();
+        }
         TextView header = (TextView) getActivity().findViewById(R.id.header);
         header.setText("Social Service");
         header.setTextSize(22);
@@ -172,6 +187,13 @@ public class GalleryFragment extends Fragment {
             getCurrentLocation();
         }
 
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                b.setEnabled(true);
+            }
+        },10000);
 
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,7 +270,7 @@ public class GalleryFragment extends Fragment {
 
 
 
-    public boolean check(String date, String cdate, String time, String ctime){
+    public boolean checkdt(String date, String cdate, String time, String ctime){
         int year = Integer.parseInt(date.substring(6)), cyear = Integer.parseInt(cdate.substring(6));
         if(cyear>year) return false;
         if(year>cyear) return true;
@@ -261,8 +283,14 @@ public class GalleryFragment extends Fragment {
         if((ctime.charAt(6)=='P' || ctime.charAt(6)=='p') && (time.charAt(6)=='A' || time.charAt(6)=='a')) return false;
         if((time.charAt(6)=='P' || time.charAt(6)=='p') && (ctime.charAt(6)=='A' || ctime.charAt(6)=='a')) return true;
         int hour = Integer.parseInt(time.substring(0,2)), chour = Integer.parseInt(ctime.substring(0,2));
-        if(chour>hour) return false;
-        if(hour>chour) return true;
+        if(chour>hour){
+            if(chour == 12) return true;
+            return false;
+        }
+        if(hour>chour){
+            if(hour == 12) return false;
+            return true;
+        }
         int min = Integer.parseInt(time.substring(3,5)), cmin = Integer.parseInt(ctime.substring(3,5));
         return cmin <= min;
     }
@@ -289,5 +317,9 @@ public class GalleryFragment extends Fragment {
 
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        check = false;
+    }
 }
