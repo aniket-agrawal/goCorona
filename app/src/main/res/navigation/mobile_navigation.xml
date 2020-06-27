@@ -24,8 +24,14 @@
         android:id="@+id/feedBackFormActivity2"
         android:name="com.example.login.ui.feedbackform.feedbackform"
         tools:layout="@layout/feedbackform" />
+
     <fragment
         android:id="@+id/SocialService"
         android:name="com.example.login.ui.service.service"
         tools:layout="@layout/service" />
+
+    <fragment
+        android:id="@+id/feedbackforus"
+        android:name="com.example.login.ui.feedback.feedback"
+        tools:layout="@layout/rating" />
 </navigation>
